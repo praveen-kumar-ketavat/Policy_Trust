@@ -97,6 +97,33 @@
 		        .login-link a:hover {
 		            text-decoration: underline;
 		        }
+				.terms-container {
+				    display: flex;
+				    align-items: center;
+				    gap: 8px;
+				    margin-top: 10px;
+				}
+
+				.terms-container input {
+				    width: 16px;
+				    height: 16px;
+				    cursor: pointer;
+				}
+
+				.terms-container label {
+				    font-size: 14px;
+				    color: #555;
+				    cursor: pointer;
+				}
+				.terms-container h7 {
+				    color: #007bff;
+				    text-decoration: none;
+				}
+				.terms-container a:hover {
+				    text-decoration: underline;
+				}
+
+
     </style>
 </head>
 <body>
@@ -129,6 +156,10 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" th:field="*{password}" required>
                 </div>
+				<div class="terms-container">
+				    <input type="checkbox" id="terms" required>
+				    <p>I agree to the <h7>Terms & Conditions</h7></p>
+				</div>
                 <button type="submit" class="btn">Register</button>
             </form>
 			<p th:if="${error}" style="color: red;">[[${error}]]</p>
@@ -136,4 +167,13 @@
         </div>
     </div>
 </body>
+<script>
+	document.querySelector(".btn").addEventListener("click", function(event) {
+	    if (!document.getElementById("terms").checked) {
+	        event.preventDefault();
+	        alert("Please agree to the Terms & Conditions before registering.");
+	    }
+	});
+</script>
+	
 </html>

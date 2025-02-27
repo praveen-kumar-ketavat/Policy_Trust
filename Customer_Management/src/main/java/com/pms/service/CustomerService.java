@@ -49,9 +49,9 @@ public class CustomerService {
     }
 	
 
-	public String login(String name, String password) {
+	public String login(String email, String password) {
 		// TODO Auto-generated method stub
-		Customer customer = repo.findByName(name).orElse(null);
+		Customer customer = repo.findByEmail(email).orElse(null);
 
 	    if (customer == null) {
 	        return "User not found";

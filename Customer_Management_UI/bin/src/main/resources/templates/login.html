@@ -74,11 +74,13 @@
     <h2>Login</h2>
     <form th:action="@{/loginCust}" method="post" th:object="${customer}">
         <div class="form-group">
-            <input type="text" placeholder="Email" id="email" name="email" th:field="*{email}" required>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" th:field="*{email}" required>
         </div>
 
         <div class="form-group">
-            <input type="password" placeholder="Password" id="password" name="password" th:field="*{password}" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" th:field="*{password}" required>
         </div>
 
         <button type="submit" class="btn">Login</button>

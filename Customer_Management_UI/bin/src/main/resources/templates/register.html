@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 70%;
+			height:80vh;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .left-section {
+            width: 40%;
+            text-align: center;
+        }
+        .left-section h2 {
+            color: #0056b3;
+        }
+        .left-section p {
+            color: #333;
+        }
+        .btn-light {
+            display: block;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px auto;
+            width: 150px;
+            text-align: center;
+        }
+        .btn-light:hover {
+            background: #0056b3;
+        }
+        .form-container {
+            width: 50%;
+			height:95%;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 5px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #555;
+        }
+        input {
+            width: 95%;
+            padding: 3px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        .btn {
+            width: 98%;
+            padding: 8px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 6px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+		.login-link a {
+		          color: #007bff;
+		            text-decoration: none;
+		        }
+		        .login-link a:hover {
+		            text-decoration: underline;
+		        }
+				.terms-container {
+				    display: flex;
+				    align-items: center;
+				    gap: 8px;
+				    margin-top: 10px;
+				}
+
+				.terms-container input {
+				    width: 16px;
+				    height: 16px;
+				    cursor: pointer;
+				}
+
+				.terms-container label {
+				    font-size: 14px;
+				    color: #555;
+				    cursor: pointer;
+				}
+				.terms-container h7 {
+				    color: #007bff;
+				    text-decoration: none;
+				}
+				.terms-container a:hover {
+				    text-decoration: underline;
+				}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h2>Join Us</h2>
+            <p>Become a valued member of PolicyTrust and discover a world where trust, transparency, and tailored insurance solutions come together for you.</p>
+            <a href="/" class="btn-light">Home</a>
+        </div>
+        <div class="form-container">
+            <h2>Register</h2>
+            <form th:action="@{/addCustomer}" method="post" th:object="${customer}">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" th:field="*{name}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" th:field="*{phone}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" th:field="*{email}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" th:field="*{address}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" th:field="*{password}" required>
+                </div>
+				<div class="form-group">
+					<label >Confirm Password</label>
+					<input type="password" id="cnf-password" name="cnf-password" required>
+				</div>
+				<div class="terms-container">
+				    <input type="checkbox" id="terms" required>
+				    <p>I agree to the <h7>Terms & Conditions</h7></p>
+				</div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+			<p th:if="${error}" style="color: red;">[[${error}]]</p>
+			<p class="login-link">Already have an account? <a th:href="@{/login}">Login here</a></p>
+        </div>
+    </div>
+</body>
+<script>
+	document.querySelector(".btn").addEventListener("click", function(event) {
+	    let password = document.getElementById("password").value;
+	    let confirmPassword = document.getElementById("cnf-password").value;
+
+	    if (password !== confirmPassword) {
+	        event.preventDefault();
+	        alert("Passwords do not match. Please enter the same password.");
+	    }
+	});
+
+	document.querySelector(".btn").addEventListener("click", function(event) {
+	    if (!document.getElementById("terms").checked) {
+	        event.preventDefault();
+	        alert("Please agree to the Terms & Conditions before registering.");
+	    }
+	});
+</script>
+	
+</html>

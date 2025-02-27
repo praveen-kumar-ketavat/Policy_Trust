@@ -40,6 +40,9 @@ public class CustomerService {
 	    if (existingCustomer.isPresent()) {
 	        return "Customer already exists";
 	    }
+	    if (cust.getPhone().length() > 10) {
+	        return "Phone number cannot exceed 10 digits";
+	    }
         cust.setId(generateId());
         cust.setVerified(false);
         cust.setActive(false);

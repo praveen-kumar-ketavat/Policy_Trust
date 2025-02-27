@@ -43,6 +43,10 @@ public class CustomerUIController {
 	        model.addAttribute("error", "Customer already exists. Please try logging in.");
 	        return "register";
 	    }
+	    if ("Phone number cannot exceed 10 digits".equals(responseBody)) {
+	        model.addAttribute("error", "Phone number cannot exceed 10 digits");
+	        return "register";
+	    }
 
 	    model.addAttribute("customerId", responseBody);
 

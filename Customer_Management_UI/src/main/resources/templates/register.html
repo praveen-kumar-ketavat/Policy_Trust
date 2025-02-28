@@ -62,7 +62,7 @@
         }
 		.right-section {
 		            flex: 1;
-		            padding: 50px;
+		            padding: 35px;
 		            display: flex;
 		            flex-direction: column;
 		            align-items: center;
@@ -70,7 +70,7 @@
 	 }
 		h1 {
 		            color: #0056ff;
-		            margin-bottom: 20px;
+		            margin-bottom: 10px;
 		        }
 		        form {
 		            width: 100%;
@@ -79,7 +79,7 @@
 		        }
 		        input {
 		            border: 1px solid #ccc;
-		            padding: 12px;
+		            padding: 10px;
 		            width: 100%;
 		            font-size: 16px;
 		            margin-top: 10px;
@@ -88,12 +88,12 @@
 		        button {
 		            background-color: #0056ff;
 		            border: none;
-		            padding: 12px;
-		            font-size: 18px;
+		            padding: 10px;
+		            font-size: 16px;
 		            color: white;
 		            border-radius: 5px;
 		            cursor: pointer;
-		            margin-top: 15px;
+		            margin-top: 5px;
 		            transition: 0.3s;
 					opacity: 0.6;
 		        }
@@ -108,7 +108,7 @@
 				    display: flex;
 				    align-items: center;
 				    gap: 8px;
-				    margin-top: 10px;
+				    margin-top: 6px;
 				}
 
 				.terms-container input {
@@ -141,7 +141,7 @@
         </div>
         <div class="right-section">
             <h1>Register</h1>
-			<p th:if="${error}" style="color: red;">[[${error}]]</p>
+			<p th:if="${error}" style="color: red; margin-block: 5px;">[[${error}]]</p>
             <form onsubmit="return validate()" name="myForm" th:action="@{/addCustomer}" method="post" th:object="${customer}">
 				<input type="text" placeholder="Full Name" name="name" th:field="*{name}" required>
 				<input type="email" placeholder="Email Address" name="email" th:field="*{email}" required>

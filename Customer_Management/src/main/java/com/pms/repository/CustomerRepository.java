@@ -12,9 +12,11 @@ import com.pms.entity.Customer;
 public interface CustomerRepository extends JpaRepository<Customer,String> {
 	Optional<Customer> findByName(String name);
 
-	List<Customer> findByVerifiedFalse();
-
-	List<Customer> findByVerifiedTrue();
-
 	Optional<Customer> findByEmail(String email);
+
+	List<Customer> findByVerifiedTrueAndActiveTrue();
+
+	List<Customer> findByVerifiedFalseAndActiveTrue();
+
+	List<Customer> findByVerifiedFalseAndActiveFalse();
 }

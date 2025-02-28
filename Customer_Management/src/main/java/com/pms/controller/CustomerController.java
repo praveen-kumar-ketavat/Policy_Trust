@@ -34,18 +34,20 @@ public class CustomerController {
 		return service.login(cust.getEmail(), cust.getPassword());
 	}
 	
-//	@GetMapping("/register")
-//	public String register() {
-//		return "register";
-//	}
 //	@GetMapping("/viewCustomers")
 //	public List<Customer> viewCustomers(){
 //		return service.viewCustomers();
 //	}
 	
-//	@PostMapping("/updateCustomer")
-//	public String updateCustomer(@RequestParam  String id,@RequestParam  String name,@RequestBody Customer cust) {
-//		return service.updateCustomer(id,name,cust);
-//	}
+	@PostMapping("/updateCustomer")
+	public String updateCustomer(@RequestBody Customer cust) {
+		return service.updateCustomer(cust.getId(),cust);
+	}
+	
+	@PostMapping("/deleteCustomer")
+	public String deleteCustomer(@RequestBody Customer cust) {
+		return service.deleteCustomer(cust);
+	}
+	
 }
 

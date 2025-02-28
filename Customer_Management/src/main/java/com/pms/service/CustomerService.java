@@ -45,7 +45,7 @@ public class CustomerService {
 	    }
         cust.setId(generateId());
         cust.setVerified(false);
-        cust.setActive(false);
+        cust.setActive(true);
         cust.setregDate(LocalDate.now().toString());
         repo.save(cust);
         return cust.getId();
@@ -53,11 +53,13 @@ public class CustomerService {
 	
 
 	public String login(String email, String password) {
-		// TODO Auto-generated method stub
 		Customer customer = repo.findByEmail(email).orElse(null);
 
 	    if (customer == null) {
 	        return "User not found";
+	    }
+	    if (!customer.getActive()) {
+	        return "Your account is deleted/rejected. Kindly register with new email.";
 	    }
 	    if (!customer.getVerified()) {
 	        return "Your account is not verified.";
@@ -74,23 +76,36 @@ public class CustomerService {
 //		return repo.findAll();
 //	}
 
-//	public String updateCustomer(String id, String name, Customer cust) {
-//	    Optional<Customer> existingCustomer = repo.findById(id);
-//
-//	    if (existingCustomer.isPresent() && existingCustomer.get().getName().equals(name)) {
-//	        Customer customer = existingCustomer.get();
-//	        
-//	        if (cust.getName() != null) customer.setName(cust.getName());
-//	        if (cust.getPhone() != null) customer.setPhone(cust.getPhone());
-//	        if (cust.getEmail() != null) customer.setEmail(cust.getEmail());
-//	        if (cust.getAddress() != null) customer.setAddress(cust.getAddress());
-//	        if (cust.getDateofreg() != null) customer.setDateofreg(cust.getDateofreg());
-//
-//	        repo.save(customer);
-//	        return "Customer details updated successfully";
-//	    } 
-//	    return "Customer not found";
-//	}
+	public String updateCustomer(String id, Customer cust) {
+	    Optional<Customer> existingCustomer = repo.findById(id);
+
+	    if (existingCustomer.isPresent()) {
+	        Customer customer = existingCustomer.get();
+	        
+	        if (cust.getName() != null) customer.setName(cust.getName());
+	        if (cust.getPhone() != null) customer.setPhone(cust.getPhone());
+	        if (cust.getEmail() != null) customer.setEmail(cust.getEmail());
+	        if (cust.getAddress() != null) customer.setAddress(cust.getAddress());
+	        if (cust.getPassword() != null) customer.setPassword(cust.getPassword());
+
+	        repo.save(customer);
+	        return "Details updated successfully";
+	    } 
+	    return "Customer not found";
+	}
+
+	public String deleteCustomer(Customer cust) {
+		 Optional<Customer> existingCustomer = repo.findById(cust.getId());
+		 if (existingCustomer.isPresent()) {
+		        Customer customer = existingCustomer.get();
+		        customer.setVerified(false);
+		        customer.setActive(false);
+		        repo.save(customer);
+		        return "Customer deleted";
+		    } else {
+		        return "Customer not found";
+		    }
+	}
 
 
 }

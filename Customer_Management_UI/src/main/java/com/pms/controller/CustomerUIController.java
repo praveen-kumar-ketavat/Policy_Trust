@@ -67,15 +67,25 @@ public class CustomerUIController {
 	    String result = response.getBody();
 
 	    if ("Login successful".equals(result)) {
-	        return "redirect:/dashboard";
+	        return "dashboard";
 	    } else {
 	        model.addAttribute("error", result);
 	        return "login";
 	    }
 	}
 	
-	@GetMapping("/dashboard")
-	public String dashboardPage() {
-	    return "dashboard";
-	}
+//	@GetMapping("/updateCust")
+//	public String showUpdateForm(Model model) {
+//	    model.addAttribute("customer", new Customer());
+//	    return "updatePage";
+//	}
+//	
+//	@PostMapping("/updateCustomer")
+//	public String updateCustomer(@ModelAttribute Customer cust, Model model) {
+//
+//	    ResponseEntity<String> response = restTemplate.postForEntity(
+//	            BASE_URL + "/admin/updateCustomer", cust, String.class);
+//
+//	    return "redirect:/fetchVerifiedCustomers";
+//	}
 }

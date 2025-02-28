@@ -1,1 +1,123 @@
-<h1>welcome to Dashboard Page..</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-list {
+            display: flex;
+            gap: 25px;
+        }
+
+        .menu-list a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .menu-list a:hover {
+            color: #007bff;
+        }
+
+        .user-menu {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            font-size: 24px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            width: 150px;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f1f1f1;
+        }
+		.logo {
+				    font-size: 22px;
+				    font-weight: bold;
+				    color: #007bff;
+				    text-transform: uppercase;
+				    letter-spacing: 1.5px;
+				    font-family: 'Poppins', sans-serif;
+				    text-shadow: 2px 2px 5px rgba(0, 123, 255, 0.3);
+				}
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">Policy Trust</div>
+    <div class="menu-list">
+        <a href="/">Home</a>
+        <a href="/">Policy</a>
+        <a href="/">Scheme</a>
+        <a href="/">Contact Us</a>
+    </div>
+    <div class="user-menu" onclick="toggleDropdown()">
+        <span class="user-icon">&#128100;</span>
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="/myPolicies">My Policies</a>
+            <a href="/accountDetails">Account Details</a>
+			<!--<a th:href="@{/updateCust}">Update Details</a>-->
+            <a href="/">Logout</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById("dropdownMenu");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+    
+    document.addEventListener("click", function(event) {
+        var userMenu = document.querySelector(".user-menu");
+        var dropdown = document.getElementById("dropdownMenu");
+        if (!userMenu.contains(event.target)) {
+            dropdown.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>

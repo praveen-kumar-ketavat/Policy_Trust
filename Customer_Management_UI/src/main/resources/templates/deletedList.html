@@ -46,28 +46,21 @@
         .customer-card p {
             margin: 5px 0;
         }
-        .btn-group {
-            margin-top: 10px;
-        }
-        .btn {
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        .btn-accept {
-            background-color: #28a745;
-            color: white;
-        }
-        .btn-reject {
-            background-color: #dc3545;
-            color: white;
-        }
-		a{
-			text-decoration-style: none;
-		}
+		.btn-group {
+		            margin-top: 10px;
+		        }
+		        .btn {
+		            padding: 8px 12px;
+		            border: none;
+		            cursor: pointer;
+		            font-size: 14px;
+		            border-radius: 5px;
+		            margin: 5px;
+		        }
+		        .btn-accept {
+		            background-color: #28a745;
+		            color: white;
+		        }
     </style>
 </head>
 <body>
@@ -81,10 +74,9 @@
                 <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
                 <p><strong>Verified:</strong> <span th:text="${customer.verified} ? 'Yes' : 'No'"></span></p>
-                <div class="btn-group">
-					<a th:href="@{/acceptCust(id=${customer.id})}" class="btn btn-accept">Accept</a>
-                    <a th:href="@{/rejectCust(id=${customer.id})}" class="btn btn-reject">Reject</a>
-                </div>
+				<div class="btn-group">
+					<a th:href="@{/acceptCustInDeleted(id=${customer.id})}" class="btn btn-accept">Accept</a>
+				</div>
             </div>
         </div>
 

@@ -79,9 +79,8 @@
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
                 <p><strong>Verified:</strong> <span th:text="${customer.verified} ? 'Yes' : 'No'"></span></p>
 				<div class="btn-group">
-				                    <button class="btn btn-update">Update</button>
-				                    <button class="btn btn-delete">Delete</button>
-				                </div>
+					<a th:href="@{/deleteCust(id=${customer.id})}" class="btn btn-delete">Delete</a>
+			</div>
             </div>
         </div>
 

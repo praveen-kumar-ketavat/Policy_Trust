@@ -82,8 +82,8 @@
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
                 <p><strong>Verified:</strong> <span th:text="${customer.verified} ? 'Yes' : 'No'"></span></p>
                 <div class="btn-group">
-					<a th:href="@{/acceptCust(id=${customer.id})}" class="btn btn-accept">Accept</a>
-                    <a th:href="@{/rejectCust(id=${customer.id})}" class="btn btn-reject">Reject</a>
+					<a th:href="@{/acceptCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-accept">Accept</a>
+                    <a th:href="@{/rejectCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-reject">Reject</a>
                 </div>
             </div>
         </div>

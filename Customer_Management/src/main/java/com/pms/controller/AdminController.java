@@ -4,6 +4,7 @@ import com.pms.entity.Admin;
 import com.pms.entity.Customer;
 import com.pms.service.AdminService;
 import com.pms.service.CustomerService;
+import com.pms.service.EmailService;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class AdminController {
     @Autowired
     AdminService service;
     CustomerService custService;
+    @Autowired
+    EmailService emailService;
 
     @PostMapping("/login")
     public String login(@RequestBody Admin admin) {
@@ -41,18 +44,23 @@ public class AdminController {
     
     @PostMapping("/deleteCustomer")
 	public String deleteCustomer(@RequestBody Customer cust) {
-		return service.deleteCustomer(cust);
+    	String response= service.deleteCustomer(cust);
+		emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
+		return response;
 	}
     
     @PostMapping("/acceptCustomer")
     public String acceptCustomer(@RequestBody Customer cust) {
-    	return service.acceptCustomer(cust);
+    	String response= service.acceptCustomer(cust);
+    	emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), true);
+    	return response;
     }
     
     @PostMapping("/rejectCustomer")
     public String rejectCustomer(@RequestBody Customer cust) {
-    	return service.rejectCustomer(cust);
-    	
+    	String response= service.rejectCustomer(cust);
+    	emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
+    	return response;
     }
     
     

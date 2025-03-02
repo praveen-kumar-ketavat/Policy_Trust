@@ -70,9 +70,11 @@ public class AdminUIController {
 	}
 	
 	@GetMapping("/acceptCust")
-	public String acceptCustomer(@RequestParam("id") String id) {
+	public String acceptCustomer(@RequestParam("id") String id, @RequestParam("email") String email, @RequestParam("name") String name) {
 	    Customer customer = new Customer();
 	    customer.setId(id);
+	    customer.setEmail(email);
+	    customer.setName(name);
 
 	    ResponseEntity<String> response = restTemplate.postForEntity(
 	            BASE_URL + "/admin/acceptCustomer", customer, String.class);
@@ -81,9 +83,11 @@ public class AdminUIController {
 	}
 	
 	@GetMapping("/acceptCustInDeleted")
-	public String acceptCustInDeleted(@RequestParam("id") String id) {
+	public String acceptCustInDeleted(@RequestParam("id") String id,@RequestParam("email") String email, @RequestParam("name") String name) {
 	    Customer customer = new Customer();
 	    customer.setId(id);
+	    customer.setEmail(email);
+	    customer.setName(name);
 
 	    ResponseEntity<String> response = restTemplate.postForEntity(
 	            BASE_URL + "/admin/acceptCustomer", customer, String.class);
@@ -92,9 +96,11 @@ public class AdminUIController {
 	}
 	
 	@GetMapping("/rejectCust")
-	public String rejectCustomer(@RequestParam("id") String id) {
+	public String rejectCustomer(@RequestParam("id") String id, @RequestParam("email") String email, @RequestParam("name") String name) {
 	    Customer customer = new Customer();
 	    customer.setId(id);
+	    customer.setEmail(email);
+	    customer.setName(name);
 
 	    ResponseEntity<String> response = restTemplate.postForEntity(
 	            BASE_URL + "/admin/rejectCustomer", customer, String.class);
@@ -103,9 +109,11 @@ public class AdminUIController {
 	}
 	
 	@GetMapping("/deleteCust")
-	public String deleteCustomer(@RequestParam("id") String id) {
+	public String deleteCustomer(@RequestParam("id") String id, @RequestParam("email") String email, @RequestParam("name") String name) {
 	    Customer customer = new Customer();
 	    customer.setId(id);
+	    customer.setEmail(email);
+	    customer.setName(name);
 
 	    ResponseEntity<String> response = restTemplate.postForEntity(
 	            BASE_URL + "/admin/deleteCustomer", customer, String.class);

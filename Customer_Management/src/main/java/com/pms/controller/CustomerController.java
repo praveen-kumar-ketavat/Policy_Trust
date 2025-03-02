@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pms.entity.Customer;
 import com.pms.service.CustomerService;
+import com.pms.service.EmailService;
 
 import jakarta.persistence.PrePersist;
 
@@ -23,10 +24,17 @@ import jakarta.persistence.PrePersist;
 public class CustomerController {
 	@Autowired
 	CustomerService service;
+	@Autowired
+    EmailService emailService;  
 	
 	@PostMapping("/register")
 	public String addCustomer(@RequestBody Customer cust) {
-		return service.addCustomer(cust);
+		String response = service.addCustomer(cust);
+		String subject = "Welcome to Policy Trust!";
+        String body = "Dear " + cust.getName() + ",\n\nYour registration is successful. Thank you for joining us!.\n\n You will be notified once you get verified by Admin";
+        emailService.sendEmail(cust.getEmail(), subject, body);
+        
+        return response;
 	}
 	
 	@PostMapping("/login")

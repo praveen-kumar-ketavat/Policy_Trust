@@ -22,6 +22,7 @@ public class AdminUIController {
 	@Autowired
 	private RestTemplate restTemplate;
 
+
 	@GetMapping("/adminLogin")
 	public String showLoginForm(Model model) {
 	    model.addAttribute("admin", new Admin());

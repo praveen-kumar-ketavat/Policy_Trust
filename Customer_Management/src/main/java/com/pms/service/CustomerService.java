@@ -48,6 +48,7 @@ public class CustomerService {
         cust.setActive(true);
         cust.setregDate(LocalDate.now().toString());
         repo.save(cust);
+        
         return cust.getId();
     }
 	

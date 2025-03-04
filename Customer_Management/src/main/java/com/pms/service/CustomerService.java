@@ -20,6 +20,8 @@ public class CustomerService {
 
 	@Autowired
 	CustomerRepository repo;
+	@Autowired
+    EmailService emailService;  
 	@PrePersist
     public String generateId() {
         //return UUID.randomUUID().toString();
@@ -48,6 +50,10 @@ public class CustomerService {
         cust.setActive(true);
         cust.setregDate(LocalDate.now().toString());
         repo.save(cust);
+        
+        String subject = "Welcome to Policy Trust!";
+        String body = "Dear " + cust.getName() + ",\n\nYour registration is successful. Thank you for joining us!.\n\n You will be notified once you get verified by Admin";
+        emailService.sendEmail(cust.getEmail(), subject, body);
         
         return cust.getId();
     }

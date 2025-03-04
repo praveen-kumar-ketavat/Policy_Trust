@@ -18,8 +18,6 @@ public class AdminController {
     @Autowired
     AdminService service;
     CustomerService custService;
-    @Autowired
-    EmailService emailService;
 
     @PostMapping("/login")
     public String login(@RequestBody Admin admin) {
@@ -44,23 +42,17 @@ public class AdminController {
     
     @PostMapping("/deleteCustomer")
 	public String deleteCustomer(@RequestBody Customer cust) {
-    	String response= service.deleteCustomer(cust);
-		emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
-		return response;
+    	return service.deleteCustomer(cust);
 	}
     
     @PostMapping("/acceptCustomer")
     public String acceptCustomer(@RequestBody Customer cust) {
-    	String response= service.acceptCustomer(cust);
-    	emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), true);
-    	return response;
+    	return service.acceptCustomer(cust);
     }
     
     @PostMapping("/rejectCustomer")
     public String rejectCustomer(@RequestBody Customer cust) {
-    	String response= service.rejectCustomer(cust);
-    	emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
-    	return response;
+    	return service.rejectCustomer(cust);
     }
     
     

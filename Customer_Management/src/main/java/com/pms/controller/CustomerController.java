@@ -24,17 +24,11 @@ import jakarta.persistence.PrePersist;
 public class CustomerController {
 	@Autowired
 	CustomerService service;
-	@Autowired
-    EmailService emailService;  
 	
 	@PostMapping("/register")
 	public String addCustomer(@RequestBody Customer cust) {
-		String response = service.addCustomer(cust);
-		String subject = "Welcome to Policy Trust!";
-        String body = "Dear " + cust.getName() + ",\n\nYour registration is successful. Thank you for joining us!.\n\n You will be notified once you get verified by Admin";
-        emailService.sendEmail(cust.getEmail(), subject, body);
-        
-        return response;
+		return service.addCustomer(cust);
+		
 	}
 	
 	@PostMapping("/login")

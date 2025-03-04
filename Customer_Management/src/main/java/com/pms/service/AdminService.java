@@ -18,6 +18,8 @@ public class AdminService {
     AdminRepository adminRepo;
     @Autowired
     CustomerRepository custRepo;
+    @Autowired
+    EmailService emailService;
 
     public String login(String email, String password) {
         Admin admin = adminRepo.findByEmailAndPassword(email, password);
@@ -46,6 +48,7 @@ public class AdminService {
 		        customer.setVerified(false);
 		        customer.setActive(false);
 		        custRepo.save(customer);
+		        emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
 		        return "Customer deleted";
 		    } else {
 		        return "Customer not found";
@@ -59,6 +62,7 @@ public class AdminService {
 		        customer.setVerified(true);
 		        customer.setActive(true);
 		        custRepo.save(customer);
+		    	emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), true);
 		        return "Customer accepted";
 		    } else {
 		        return "Customer not found";
@@ -72,6 +76,7 @@ public class AdminService {
 		        customer.setVerified(false);
 		        customer.setActive(false);
 		        custRepo.save(customer);
+		        emailService.sendAccountStatusEmail(cust.getEmail(), cust.getName(), false);
 		        return "Customer rejected";
 		    } else {
 		        return "Customer not found";

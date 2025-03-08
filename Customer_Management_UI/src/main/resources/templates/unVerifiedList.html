@@ -80,7 +80,9 @@
                 <h3>ID: <span th:text="${customer.id}"></span></h3>
                 <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-                <p><strong>Verified:</strong> <span th:text="${customer.verified} ? 'Yes' : 'No'"></span></p>
+				<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
+				<p><strong>Registered Date:</strong> <span th:text="${customer.regDate}"></span></p>
+				<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
                 <div class="btn-group">
 					<a th:href="@{/acceptCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-accept">Accept</a>
                     <a th:href="@{/rejectCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-reject">Reject</a>

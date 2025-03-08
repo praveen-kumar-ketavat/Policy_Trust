@@ -2,6 +2,7 @@ package com.pms.controller;
 
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.exception.InvalidEntityException;
 import com.pms.service.AdminService;
 import com.pms.service.CustomerService;
 import com.pms.service.EmailService;
@@ -41,17 +42,17 @@ public class AdminController {
     
     
     @PostMapping("/deleteCustomer")
-	public String deleteCustomer(@RequestBody Customer cust) {
+	public String deleteCustomer(@RequestBody Customer cust) throws InvalidEntityException {
     	return service.deleteCustomer(cust);
 	}
     
     @PostMapping("/acceptCustomer")
-    public String acceptCustomer(@RequestBody Customer cust) {
+    public String acceptCustomer(@RequestBody Customer cust) throws InvalidEntityException {
     	return service.acceptCustomer(cust);
     }
     
     @PostMapping("/rejectCustomer")
-    public String rejectCustomer(@RequestBody Customer cust) {
+    public String rejectCustomer(@RequestBody Customer cust) throws InvalidEntityException {
     	return service.rejectCustomer(cust);
     }
     

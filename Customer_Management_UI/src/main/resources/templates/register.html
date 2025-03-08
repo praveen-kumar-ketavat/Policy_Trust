@@ -19,27 +19,27 @@
             justify-content: space-between;
             align-items: center;
             width: 70%;
-			height:85vh;
+            height: 85vh;
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
-		.left-section {
-				            flex: 1;
-				            display: flex;
-				            flex-direction: column;
-				            align-items: center;
-				            text-align: center;
-				            padding: 40px;
-				            color: black;
-		}
-		.left-section img {
-			             width: 80%;
-			             max-width: 300px;
-			             border-radius: 10px;
-			             margin-bottom: 20px;
-			  }
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            color: black;
+        }
+        .left-section img {
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
         .left-section h2 {
             color: #0056b3;
         }
@@ -60,179 +60,143 @@
         .btn-light:hover {
             background: #0056b3;
         }
-		.right-section {
-		            flex: 1;
-		            padding: 30px;
-		            display: flex;
-		            flex-direction: column;
-		            align-items: center;
-		            justify-content: center;
-	 }
-		h1 {
-		            color: #0056ff;
-		            margin-bottom: 10px;
-		        }
-		        form {
-		            width: 100%;
-		            display: flex;
-		            flex-direction: column;
-		        }
-		        input {
-		            border: 1px solid #ccc;
-		            padding: 10px;
-		            width: 100%;
-		            font-size: 16px;
-		            margin-top: 10px;
-		            border-radius: 5px;
-		        }
-		        button {
-		            background-color: #0056ff;
-		            border: none;
-		            padding: 10px;
-		            font-size: 16px;
-		            color: white;
-		            border-radius: 5px;
-		            cursor: pointer;
-		            margin-top: 5px;
-		            transition: 0.3s;
-					opacity: 0.6;
-		        }
-		.login-link a {
-		          color: #007bff;
-		            text-decoration: none;
-		        }
-		        .login-link a:hover {
-		            text-decoration: underline;
-		        }
-				.terms-container {
-				    display: flex;
-				    align-items: center;
-				    gap: 8px;
-				    margin-top: 6px;
-				}
-
-				.terms-container input {
-				    width: 16px;
-				    height: 16px;
-				    cursor: pointer;
-					margin-top: 0;
-				}
-				.terms-container h7 {
-				    color: #007bff;
-				    text-decoration: none;
-					cursor: pointer;
-				}
-				.terms-container a:hover {
-				    text-decoration: underline;
-				}
-				.formError{
-					font-size: small;
-				}
-
+        .right-section {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            color: #0056ff;
+            margin-bottom: 10px;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0056ff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .terms-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .terms-container input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 0;
+        }
+        .terms-container label {
+            color: #007bff;
+            cursor: pointer;
+        }
+        .terms-container label:hover {
+            text-decoration: underline;
+        }
+        .formError {
+            font-size: small;
+            color: red;
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .password-container input {
+            flex: 1;
+        }
+        .password-container button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="left-section">
-			<img src="https://thumbs.dreamstime.com/b/policy-management-label-presented-happy-little-man-against-white-background-32211356.jpg" alt="Encouraging Image">
+            <img src="https://thumbs.dreamstime.com/b/policy-management-label-presented-happy-little-man-against-white-background-32211356.jpg" alt="Encouraging Image">
             <h2>Join PolicyTrust Today</h2>
             <p>Become a valued member of PolicyTrust and discover a world where trust, transparency, and tailored insurance solutions come together for you.</p>
             <a href="/" class="btn-light">Home</a>
         </div>
         <div class="right-section">
             <h1>Register</h1>
-			<p th:if="${error}" style="color: red; margin-block: 5px;">[[${error}]]</p>
-            <form onsubmit="return validate()" name="myForm" th:action="@{/addCustomer}" method="post" th:object="${customer}">
-				<input type="text" placeholder="Full Name" name="name" th:field="*{name}" required>
-				<input type="email" placeholder="Email Address" name="email" th:field="*{email}" required>
-				<span style="color: red;" id="emailError" class="formError"></span>
-				<input type="text" placeholder="Phone" name="phone" th:field="*{phone}" required>
-				<span style="color: red;" id="phoneError" class="formError"></span>
-				<input type="text" placeholder="Address" name="address" th:field="*{address}" required>
-				<span style="color: red;" id="addressError" class="formError"></span>
-				<input type="password" placeholder="Password" name="password" th:field="*{password}" required>
-				<span style="color: red;" id="passError" class="formError"></span>
-				<input type="password" placeholder="Confirm Password" name="password1" required>
-				<span style="color: red;" id="passConfirmError" class="formError"></span>
-				<div class="terms-container">
-				    <input type="checkbox" id="terms" required>
-				    <p  style=" margin-block: 5px;">I agree to the <h7>Terms & Conditions</h7></p>
-				</div>
-				<button type="submit" id="btn">Register</button>
+            <p th:if="${error}" style="color: red; margin-block: 5px;">[[${error}]]</p>
+            
+            <form th:action="@{/addCustomer}" method="post" th:object="${customer}">
+                <input type="text" placeholder="Full Name" name="name" th:field="*{name}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('name')}" 
+				      th:text="${validationErrors.get('name')}" class="formError"></span>
+					  
+                <input type="text" placeholder="Email Address" name="email" th:field="*{email}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('email')}" 
+				      th:text="${validationErrors.get('email')}" class="formError"></span>
+
+                <input type="text" placeholder="Phone" name="phone" th:field="*{phone}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('phone')}" 
+				      th:text="${validationErrors.get('phone')}" class="formError"></span>
+
+                <input type="text" placeholder="Address" name="address" th:field="*{address}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('address')}" 
+				      th:text="${validationErrors.get('address')}" class="formError"></span>
+
+                <div class="password-container">
+                    <input type="password" placeholder="Password" name="password" th:field="*{password}" id="passwordField" required>
+                    <button type="button" onclick="togglePassword()" ></button>
+                </div>
+				<span th:if="${validationErrors != null and validationErrors.containsKey('password')}" 
+				      th:text="${validationErrors.get('password')}" class="formError"></span>
+
+                <input type="password" placeholder="Confirm Password" name="password1" required>
+
+                <div class="terms-container">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <span class="terms-link">Terms & Conditions</span></label>
+                </div>
+
+                <button type="submit">Register</button>
             </form>
-			<p class="login-link">Already have an account? <a th:href="@{/login}">Login here</a></p>
+
+            <p class="login-link">Already have an account? <a th:href="@{/login}">Login here</a></p>
         </div>
     </div>
-<script>
-	function clearErrors(){
-		            let errors=document.getElementsByClassName('formError');
-		            for(let i of errors){
-		                i.innerHTML="";
-		            }
-		        }
-		        function valid(email){
-		            const pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		            return pattern.test(email);
-		        }
-				function validPhone(phone){
-					const pattern=/((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}/;
-					return pattern.test(phone);
-				}
-		        function validate(){
-		            clearErrors();
-		            let email=document.forms['myForm']['email'].value;
-		            if(!(valid(email))){
-		                document.getElementById('emailError').innerHTML="*Please Enter Valid Email";
-		                return false;
-		            }
-					let phone=document.forms['myForm']['phone'].value
-					if(!(validPhone(phone))){
-					    document.getElementById('phoneError').innerHTML="*Please Enter Valid PhoneNo";
-					    return false;
-					}
-		            let password=document.forms['myForm']['password'].value;
-		            if(password.length<4){
-		                document.getElementById('passError').innerHTML="*Password should be at least 4 Characters";
-		                return false;
-		            }
-		            let password1=document.forms['myForm']['password1'].value;
-		            if(password1!==password){
-		                document.getElementById('passConfirmError').innerHTML="*Password is not Matched";
-		                return false;
-		            }
-		        }
-				function checkFormCompletion() {
-				        let form = document.forms['myForm'];
-				        let inputs = form.querySelectorAll("input[required]");
-				        let checkbox = document.getElementById('terms');
-				        let allFilled = true;
 
-				        inputs.forEach(input => {
-				            if (input.type !== "checkbox" && !input.value.trim()) {
-				                allFilled = false;
-				            }
-				        });
-
-				        if (!checkbox.checked) {
-				            allFilled = false;
-				        }
-
-				        let registerButton = document.getElementById('btn');
-				        registerButton.style.opacity = allFilled ? "1" : "0.6";
-				    }
-
-				    document.addEventListener("DOMContentLoaded", function () {
-				        let form = document.forms['myForm'];
-				        let inputs = form.querySelectorAll("input[required]");
-				        let checkbox = document.getElementById('terms');
-
-				        inputs.forEach(input => {
-				            input.addEventListener("input", checkFormCompletion);
-				        });
-
-				        checkbox.addEventListener("change", checkFormCompletion);
-				    });
-</script>
-	
+    <script>
+        function togglePassword() {
+            let passwordField = document.getElementById("passwordField");
+            passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        }
+    </script>
 </body>
 </html>

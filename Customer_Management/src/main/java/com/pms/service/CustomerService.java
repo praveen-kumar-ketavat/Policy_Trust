@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pms.entity.Customer;
+import com.pms.exception.InvalidEntityException;
 import com.pms.repository.CustomerRepository;
 
 import jakarta.persistence.PrePersist;
@@ -24,17 +25,9 @@ public class CustomerService {
     EmailService emailService;  
 	@PrePersist
     public String generateId() {
-        //return UUID.randomUUID().toString();
 		long count = repo.count() + 1;
 		return "C" + String.format("%03d", count);//C001
     }
-//	public String addCustomer(Customer cust) {
-//		// TODO Auto-generated method stub
-//		cust.setId(generateId());
-//		cust.setVerified(false);
-//		repo.save(cust);
-//		return "Customer added successfully";
-//	}
 	
 	public String addCustomer(Customer cust) {
 		Optional<Customer> existingCustomer = repo.findByEmail(cust.getEmail());
@@ -42,13 +35,10 @@ public class CustomerService {
 	    if (existingCustomer.isPresent()) {
 	        return "Customer already exists";
 	    }
-	    if (cust.getPhone().length() > 10) {
-	        return "Phone number cannot exceed 10 digits";
-	    }
         cust.setId(generateId());
         cust.setVerified(false);
         cust.setActive(true);
-        cust.setregDate(LocalDate.now().toString());
+        cust.setRegDate(LocalDate.now().toString());
         repo.save(cust);
         
         String subject = "Welcome to Policy Trust!";
@@ -59,7 +49,7 @@ public class CustomerService {
     }
 	
 
-	public String login(String email, String password) {
+	public String login(String email, String password) throws InvalidEntityException {
 		Customer customer = repo.findByEmail(email).orElse(null);
 
 	    if (customer == null) {
@@ -78,12 +68,7 @@ public class CustomerService {
 	}
 
 
-//	public List<Customer> viewCustomers() {
-//		// TODO Auto-generated method stub
-//		return repo.findAll();
-//	}
-
-	public String updateCustomer(String id, Customer cust) {
+	public String updateCustomer(String id, Customer cust) throws InvalidEntityException {
 	    Optional<Customer> existingCustomer = repo.findById(id);
 
 	    if (existingCustomer.isPresent()) {
@@ -101,7 +86,7 @@ public class CustomerService {
 	    return "Customer not found";
 	}
 
-	public String deleteCustomer(Customer cust) {
+	public String deleteCustomer(Customer cust) throws InvalidEntityException {
 		 Optional<Customer> existingCustomer = repo.findById(cust.getId());
 		 if (existingCustomer.isPresent()) {
 		        Customer customer = existingCustomer.get();

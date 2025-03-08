@@ -2,6 +2,7 @@ package com.pms.service;
 
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.exception.InvalidEntityException;
 import com.pms.repository.AdminRepository;
 import com.pms.repository.CustomerRepository;
 
@@ -41,7 +42,7 @@ public class AdminService {
 	}
 	
 
-	public String deleteCustomer(Customer cust) {
+	public String deleteCustomer(Customer cust) throws InvalidEntityException {
 		 Optional<Customer> existingCustomer = custRepo.findById(cust.getId());
 		 if (existingCustomer.isPresent()) {
 		        Customer customer = existingCustomer.get();
@@ -55,7 +56,7 @@ public class AdminService {
 		    }
 	}
 
-	public String acceptCustomer(Customer cust) {
+	public String acceptCustomer(Customer cust) throws InvalidEntityException {
 		 Optional<Customer> existingCustomer = custRepo.findById(cust.getId());
 		 if (existingCustomer.isPresent()) {
 		        Customer customer = existingCustomer.get();
@@ -69,7 +70,7 @@ public class AdminService {
 		    }
 	}
 
-	public String rejectCustomer(Customer cust) {
+	public String rejectCustomer(Customer cust) throws InvalidEntityException {
 		 Optional<Customer> existingCustomer = custRepo.findById(cust.getId());
 		 if (existingCustomer.isPresent()) {
 		        Customer customer = existingCustomer.get();

@@ -57,7 +57,7 @@
 		            border-radius: 5px;
 		            margin: 5px;
 		        }
-		        .btn-update {
+		        .btn-view {
 		            background-color: #28a745;
 		            color: white;
 		        }
@@ -65,6 +65,10 @@
 		            background-color: #dc3545;
 		            color: white;
 		        }
+				a {
+				    text-decoration: none;
+				}
+
     </style>
 </head>
 <body>
@@ -77,8 +81,10 @@
                 <h3>ID: <span th:text="${customer.id}"></span></h3>
                 <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-                <p><strong>Verified:</strong> <span th:text="${customer.verified} ? 'Yes' : 'No'"></span></p>
+				<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
+				<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
 				<div class="btn-group">
+					<a  class="btn btn-view">View Info</a>
 					<a th:href="@{/deleteCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-delete">Delete</a>
 			</div>
             </div>

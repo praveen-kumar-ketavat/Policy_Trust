@@ -24,6 +24,12 @@ public class Customer {
     @NotEmpty(message = "Name is required")
     private String name;
 
+	@Column(name = "age")
+	@NotNull(message = "Age is required")
+	@Min(value = 18, message = "Age must be at least 18")
+	@Max(value = 100, message = "Age must not exceed 100")
+	private Integer age;
+	
     @Column(name = "phone")
     @NotEmpty(message = "Phone number is required")
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be of 10 digits and Numbers only")
@@ -75,6 +81,14 @@ public class Customer {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
     
     public String getPhone() {

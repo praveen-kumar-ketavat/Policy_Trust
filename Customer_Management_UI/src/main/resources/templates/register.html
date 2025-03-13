@@ -180,6 +180,10 @@
                 <input type="text" placeholder="Email Address" name="email" th:field="*{email}">
 				<span th:if="${validationErrors != null and validationErrors.containsKey('email')}" 
 				      th:text="${validationErrors.get('email')}" class="formError"></span>
+					  
+				<input type="number" placeholder="Enter Age" name="age" th:field="*{age}">
+				<span th:if="${validationErrors != null and validationErrors.containsKey('age')}" 
+					th:text="${validationErrors.get('age')}" class="formError"></span>
 
                 <input type="text" placeholder="Phone" name="phone" th:field="*{phone}">
 				<span th:if="${validationErrors != null and validationErrors.containsKey('phone')}" 

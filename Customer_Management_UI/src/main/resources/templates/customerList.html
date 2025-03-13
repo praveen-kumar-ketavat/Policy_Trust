@@ -80,12 +80,13 @@
             <div class="customer-card" th:each="customer : ${customers}">
                 <h3>ID: <span th:text="${customer.id}"></span></h3>
                 <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
+				<p><strong>Age:</strong> <span th:text="${customer.age}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
 				<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
 				<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
 				<div class="btn-group">
 					<a  class="btn btn-view">View Info</a>
-					<a th:href="@{/deleteCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-delete">Delete</a>
+					<a th:href="@{/deleteCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-delete">Deactivate</a>
 			</div>
             </div>
         </div>

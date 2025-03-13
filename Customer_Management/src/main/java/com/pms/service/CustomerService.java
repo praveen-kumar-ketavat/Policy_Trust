@@ -99,5 +99,9 @@ public class CustomerService {
 		    }
 	}
 
+	public Optional<Customer> viewCustomerById(String id) {
+		return repo.findById(id);
+	}
+
 
 }

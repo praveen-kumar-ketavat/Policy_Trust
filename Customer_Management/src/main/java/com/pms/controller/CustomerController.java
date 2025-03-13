@@ -1,6 +1,7 @@
 package com.pms.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,13 @@ public class CustomerController {
 	public String login(@RequestBody Customer cust) throws InvalidEntityException {
 		return service.login(cust.getEmail(), cust.getPassword());
 	}
-	
-//	@GetMapping("/viewCustomers")
-//	public List<Customer> viewCustomers(){
-//		return service.viewCustomers();
-//	}
+
+	@GetMapping("/viewCustomer/{id}")
+	public ResponseEntity<?> viewCustomerById(@PathVariable String id) {
+		Optional<Customer> customer = service.viewCustomerById(id);
+		return customer.isPresent() ? ResponseEntity.ok(customer.get()) : ResponseEntity.badRequest().body("Customer not found");
+	}
+
 	
 	@PostMapping("/updateCustomer")
 	public String updateCustomer(@RequestBody Customer cust) throws InvalidEntityException {

@@ -15,8 +15,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -122,33 +125,134 @@ public class CustomerUIController {
 	    return "login";
 	}
 	
+//	@PostMapping("/loginCust")
+//	public String loginCustomer(@ModelAttribute Customer cust, Model model) {
+//	    ResponseEntity<String> response = restTemplate.postForEntity(
+//	            BASE_URL + "/customer/login", cust, String.class);
+//
+//	    String result = response.getBody();
+//
+//	    if ("Login successful".equals(result)) {
+//	        return "dashboard";
+//	    } else {
+//	        model.addAttribute("error", result);
+//	        return "login";
+//	    }
+//	}
+	
+//	@PostMapping("/loginCust")
+//	public String loginCustomer(@ModelAttribute Customer cust, Model model) {
+//	    try {
+//	        ResponseEntity<Customer> response = restTemplate.postForEntity(BASE_URL + "/customer/login",cust, Customer.class);
+//	        Customer customer = response.getBody();
+//
+//	        if (customer != null) {
+//	            model.addAttribute("customer", customer);
+//	            return "dashboard"; // Redirect to dashboard
+//	        }
+//	    } catch (HttpClientErrorException e) {
+//	        model.addAttribute("error", e.getResponseBodyAsString());
+//	        return "login";
+//	    }
+//
+//	    model.addAttribute("error", "Invalid credentials or account issue");
+//	    return "login";
+//	}
+	
 	@PostMapping("/loginCust")
-	public String loginCustomer(@ModelAttribute Customer cust, Model model) {
-	    ResponseEntity<String> response = restTemplate.postForEntity(
-	            BASE_URL + "/customer/login", cust, String.class);
+	public String loginCustomer(@ModelAttribute Customer cust, Model model, HttpSession session) {
+	    try {
+	        ResponseEntity<Customer> response = restTemplate.postForEntity(BASE_URL + "/customer/login", cust, Customer.class);
+	        Customer customer = response.getBody();
 
-	    String result = response.getBody();
-
-	    if ("Login successful".equals(result)) {
-	        return "dashboard";
-	    } else {
-	        model.addAttribute("error", result);
+	        if (customer != null) {
+	            session.setAttribute("loggedInCustomer", customer);
+	            model.addAttribute("customer", customer);
+	            return "dashboard";
+	        }
+	    }catch (HttpClientErrorException e) {
+	        try {
+	            // Extract the "error" message from response
+	            String errorMessage = objectMapper.readTree(e.getResponseBodyAsString()).get("error").asText();
+	            model.addAttribute("error", errorMessage);
+	        } catch (Exception e1) {
+	            model.addAttribute("error", "An error occurred while processing the response.");
+	        }
 	        return "login";
 	    }
+	    return "login";
 	}
 	
-//	@GetMapping("/updateCust")
-//	public String showUpdateForm(Model model) {
-//	    model.addAttribute("customer", new Customer());
-//	    return "updatePage";
-//	}
-//	
-//	@PostMapping("/updateCustomer")
-//	public String updateCustomer(@ModelAttribute Customer cust, Model model) {
-//
-//	    ResponseEntity<String> response = restTemplate.postForEntity(
-//	            BASE_URL + "/admin/updateCustomer", cust, String.class);
-//
-//	    return "redirect:/fetchVerifiedCustomers";
-//	}
+	@GetMapping("/custAccount")
+    public String getAccountDetails(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+
+        if (customer == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("customer", customer);
+        return "custAccount"; 
+    }
+	@GetMapping("/dashboard")
+	public String showDashboardPage(HttpSession session, Model model) {
+		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+	    model.addAttribute("customer", customer);
+	    return "dashboard";
+	}
+	
+	@GetMapping("/updateCust")
+	public String showUpdateForm(Model model) {
+	    model.addAttribute("customer", new Customer());
+	    return "updatePage";
+	}
+	
+	@PostMapping("/updateCustomer")
+	public String updateCustomer(@ModelAttribute Customer cust, Model model, HttpSession session) {
+		
+
+		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+
+		cust.setId(customer.getId());
+	    ResponseEntity<Customer> response = restTemplate.postForEntity(
+	            BASE_URL + "/customer/updateCustomer", cust, Customer.class);
+	    
+	    session.setAttribute("loggedInCustomer", response.getBody());
+
+	    return "redirect:/custAccount";
+	}
+	
+	@GetMapping("/changePassword")
+	public String changePasswordForm(Model model) {
+	    model.addAttribute("customer", new Customer());
+	    return "ChangePasswordPage";
+	}
+	
+	@PostMapping("/changeCustPassword")
+	public String changeCustPassword(@ModelAttribute Customer cust, Model model, HttpSession session) {
+		
+
+		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+
+		cust.setId(customer.getId());
+	    ResponseEntity<Customer> response = restTemplate.postForEntity(
+	            BASE_URL + "/customer/changePassword", cust, Customer.class);
+
+	    return "redirect:/custAccount";
+	}
+	
+	
+	@GetMapping("/deleteCustomer")
+	public String deleteCustomer(@RequestParam("id") String id, @RequestParam("email") String email, @RequestParam("name") String name) {
+	    Customer customer = new Customer();
+	    customer.setId(id);
+	    customer.setEmail(email);
+	    customer.setName(name);
+
+	    ResponseEntity<String> response = restTemplate.postForEntity(
+	            BASE_URL + "/customer/deleteCustomer", customer, String.class);
+
+	    return "redirect:/login";
+	}
+	
 }

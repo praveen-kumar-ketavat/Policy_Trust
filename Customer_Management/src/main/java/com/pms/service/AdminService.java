@@ -22,9 +22,17 @@ public class AdminService {
     @Autowired
     EmailService emailService;
 
-    public String login(String email, String password) {
-        Admin admin = adminRepo.findByEmailAndPassword(email, password);
-        return admin != null ? "Login successful" : "Invalid credentials";
+    public Admin login(String email, String password) throws InvalidEntityException {
+        Admin admin = adminRepo.findByEmail(email);
+        
+        if (admin == null) {
+	        throw new InvalidEntityException("User not found");
+	    }
+	    if (!admin.getPassword().equals(password)) {
+	        throw new InvalidEntityException("Invalid credentials");
+	    }
+	    
+        return admin;
     }
 
     public List<Customer> getVerifiedCustomers() {

@@ -94,9 +94,10 @@
         <a href="/">Contact Us</a>
     </div>
     <div class="user-menu" onclick="toggleDropdown()">
+		<h6>Welcome, <span th:text="${customer.name}"></span></h6>
         <span class="user-icon">&#128100;</span>
         <div class="dropdown-menu" id="dropdownMenu">
-            <a href="">Account Details</a>
+            <a th:href="@{/custAccount}">Account Details</a>
 			<a href="">Policies</a>
 			<a href="">Transactions</a>
             <a href="/">Logout</a>

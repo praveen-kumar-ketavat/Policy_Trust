@@ -10,6 +10,7 @@ import com.pms.service.EmailService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +22,9 @@ public class AdminController {
     CustomerService custService;
 
     @PostMapping("/login")
-    public String login(@RequestBody Admin admin) {
-        return service.login(admin.getEmail(), admin.getPassword());
+    public ResponseEntity<Admin> login(@RequestBody Admin admin) throws InvalidEntityException {
+        Admin loggedInAdmin = service.login(admin.getEmail(), admin.getPassword());
+        return ResponseEntity.ok(loggedInAdmin);
     }
     
     @GetMapping("/viewVerifiedCustomers")

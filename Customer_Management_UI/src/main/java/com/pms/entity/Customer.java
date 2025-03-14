@@ -53,11 +53,11 @@ public class Customer {
 		this.address = address;
 	}
 
-	public String getregDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setregDate(String regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 

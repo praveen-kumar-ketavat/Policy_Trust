@@ -28,6 +28,13 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<Map<String,String>>(errors,HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(InvalidEntityException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidEntityException(InvalidEntityException ex) {
+        Map<String, String> err = new HashMap<>();
+        err.put("error", ex.getMessage());
+        return new ResponseEntity<Map<String,String>>(err,HttpStatus.BAD_REQUEST);
+    }
 
     // Handle unexpected errors
     @ExceptionHandler(Exception.class)

@@ -49,41 +49,65 @@ public class CustomerService {
     }
 	
 
-	public String login(String email, String password) throws InvalidEntityException {
-		Customer customer = repo.findByEmail(email).orElse(null);
+//	public String login(String email, String password) throws InvalidEntityException {
+//		Customer customer = repo.findByEmail(email).orElse(null);
+//
+//	    if (customer == null) {
+//	        return "User not found";
+//	    }
+//	    if (!customer.getActive()) {
+//	        return "Your account is deleted/rejected. Kindly register with new email.";
+//	    }
+//	    if (!customer.getVerified()) {
+//	        return "Your account is not verified.";
+//	    }
+//	    if (!customer.getPassword().equals(password)) {
+//	        return "Invalid credentials";
+//	    }
+//	    return "Login successful";
+//	}
+	
+	public Customer login(String email, String password) throws InvalidEntityException {
+	    Customer customer = repo.findByEmail(email).orElse(null);
 
 	    if (customer == null) {
-	        return "User not found";
+	        throw new InvalidEntityException("User not found");
 	    }
 	    if (!customer.getActive()) {
-	        return "Your account is deleted/rejected. Kindly register with new email.";
+	        throw new InvalidEntityException("Your account is deleted/rejected. Kindly register with a new email.");
 	    }
 	    if (!customer.getVerified()) {
-	        return "Your account is not verified.";
+	        throw new InvalidEntityException("Your account is not verified.");
 	    }
 	    if (!customer.getPassword().equals(password)) {
-	        return "Invalid credentials";
+	        throw new InvalidEntityException("Invalid credentials");
 	    }
-	    return "Login successful";
+	    
+	    return customer;
 	}
 
 
-	public String updateCustomer(String id, Customer cust) throws InvalidEntityException {
+
+	public Customer updateCustomer(String id, Customer cust) throws InvalidEntityException {
 	    Optional<Customer> existingCustomer = repo.findById(id);
 
-	    if (existingCustomer.isPresent()) {
-	        Customer customer = existingCustomer.get();
-	        
-	        if (cust.getName() != null) customer.setName(cust.getName());
-	        if (cust.getPhone() != null) customer.setPhone(cust.getPhone());
-	        if (cust.getEmail() != null) customer.setEmail(cust.getEmail());
-	        if (cust.getAddress() != null) customer.setAddress(cust.getAddress());
-	        if (cust.getPassword() != null) customer.setPassword(cust.getPassword());
-
-	        repo.save(customer);
-	        return "Details updated successfully";
-	    } 
-	    return "Customer not found";
+	    Customer customer = existingCustomer.get();
+        
+        if (cust.getName() != "") customer.setName(cust.getName());
+        if (cust.getAge()!=null) customer.setAge(cust.getAge());
+        if (cust.getPhone() != "") customer.setPhone(cust.getPhone());
+        if (cust.getAddress() != "") customer.setAddress(cust.getAddress());
+        repo.save(customer);
+        
+        String subject = "Your Account Has Been Updated";
+	    String body = "Dear " + customer.getName() + ",\n\n"
+	                + "Your account has been successfully updated.\n\n"
+	                + "Best regards,\n"
+	                + "Policy Trust";
+	    
+	    emailService.sendEmail(customer.getEmail(), subject, body);
+        
+        return customer;
 	}
 
 	public String deleteCustomer(Customer cust) throws InvalidEntityException {
@@ -93,10 +117,37 @@ public class CustomerService {
 		        customer.setVerified(false);
 		        customer.setActive(false);
 		        repo.save(customer);
+		        
+		        String subject = "Your Account is Deactivated";
+			    String body = "Dear " + customer.getName() + ",\n\n"
+			                + "Your account has been successfully Deactivated.\n\n"
+			                + "Best regards,\n"
+			                + "Policy Trust";
+			    
+			    emailService.sendEmail(customer.getEmail(), subject, body);
+			    
 		        return "Customer deleted";
 		    } else {
 		        return "Customer not found";
 		    }
+	}
+
+	public Customer changeCustomerPassword(String id, Customer cust) {
+		// TODO Auto-generated method stub
+		 Optional<Customer> existingCustomer = repo.findById(id);
+		 Customer customer = existingCustomer.get();
+		 if (cust.getPassword() != "") customer.setPassword(cust.getPassword());
+		 repo.save(customer);
+		 
+		 String subject = "Your Password Has Been Changed";
+		    String body = "Dear " + customer.getName() + ",\n\n"
+		                + "Your account password has been successfully updated.\n\n"
+		                + "Best regards,\n"
+		                + "Policy Trust";
+		    
+		    emailService.sendEmail(customer.getEmail(), subject, body);
+		    
+	     return customer;
 	}
 
 

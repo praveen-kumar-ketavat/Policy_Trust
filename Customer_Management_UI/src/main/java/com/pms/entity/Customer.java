@@ -4,6 +4,7 @@ public class Customer {
 
 	private String id;
 	private String name;
+	private Integer age;
 	private String phone;
 	private String email;
 	private String address;
@@ -52,11 +53,11 @@ public class Customer {
 		this.address = address;
 	}
 
-	public String getregDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setregDate(String regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 
@@ -83,5 +84,13 @@ public class Customer {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	 public Integer getAge() {
+	        return age;
+	    }
+
+	    public void setAge(Integer age) {
+	        this.age = age;
+	    }
 
 }

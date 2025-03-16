@@ -40,6 +40,14 @@ public class CustomerUIController {
 	public String home() {
 		return "home";
 	}
+	@GetMapping("/contact")
+	public String contact() {
+		return "contact";
+	}
+	@GetMapping("/custHomeDashboard")
+	public String custHomeDashboard() {
+		return "custHomeDashboard";
+	}
 
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {

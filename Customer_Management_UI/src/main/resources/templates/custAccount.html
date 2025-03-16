@@ -32,7 +32,7 @@
 				   margin-bottom: 30px;
 	 }
 	.btn {
-		padding: 8px 12px;
+		padding: 10px 13px;
 		border: none;
 		cursor: pointer;
 		font-size: 14px;
@@ -51,15 +51,23 @@
 		background-color: #dc3545;
 		color: white;
 	}
-		a{
-			text-decoration: none;
-		}
+			a{
+				text-decoration: none;
+				color: #007bff;
+				display: inline-block;
+				margin-top: 20px;
+				font-weight: bolder;
+			}
+			a:hover{
+				text-decoration: underline;
+			}
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Account Details</h2>
+	<span style="font-size: 90px;" class="user-icon">&#128100;</span>
 	<p><strong>ID:</strong> <span style="color: #007bff;font: bold;" th:text="${customer.id}"></span></p>
     <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
 	<p><strong>Age:</strong> <span th:text="${customer.age}"></span></p>

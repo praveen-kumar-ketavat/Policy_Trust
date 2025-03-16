@@ -17,6 +17,7 @@
         }
         .container {
             display: flex;
+			position: relative;
             justify-content: space-between;
             align-items: center;
             width: 70%;
@@ -158,10 +159,28 @@
 		i{
 			cursor: pointer;
 		}
+		.back-button {
+				 position: absolute;
+				 top: 30px;
+				 left:38px;
+				 background: none;
+				 border: none;
+				 font-size: 40px;
+				 cursor: pointer;
+				 color: #007bff;
+				 transition: 0.3s;
+	}
+
+	.back-button:hover {
+				 color: #0056b3;
+				 transform: scale(1.1);
+	}
+
     </style>
 </head>
 <body>
     <div class="container">
+		<span class="back-button" onclick="goBack()">←</span>
         <div class="left-section">
             <img src="https://thumbs.dreamstime.com/b/policy-management-label-presented-happy-little-man-against-white-background-32211356.jpg" alt="Encouraging Image">
             <h2>Join PolicyTrust Today</h2>
@@ -181,7 +200,7 @@
 				<span th:if="${validationErrors != null and validationErrors.containsKey('email')}" 
 				      th:text="${validationErrors.get('email')}" class="formError"></span>
 					  
-				<input type="number" placeholder="Enter Age" name="age" th:field="*{age}">
+				<input type="number" placeholder="Age" name="age" th:field="*{age}">
 				<span th:if="${validationErrors != null and validationErrors.containsKey('age')}" 
 					th:text="${validationErrors.get('age')}" class="formError"></span>
 
@@ -219,6 +238,9 @@
     </div>
 
     <script>
+		function goBack() {
+			           window.history.back();
+			       }
 		function togglePassword() {
 		    let passwordField = document.getElementById("passwordField");
 		    let eyeIcon = document.querySelector(".fa-eye");

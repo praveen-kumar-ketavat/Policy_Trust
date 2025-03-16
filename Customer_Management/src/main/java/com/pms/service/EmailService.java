@@ -26,7 +26,7 @@ public class EmailService {
         String body = "Dear " + name + ",\n\n" +
                       (isApproved 
                           ? "Congratulations! Your account has been approved. You can now log in and use our services."
-                          : "We regret to inform you that your account has been rejected/deleted by Admin.\n\n Please Register with another Email.") +
+                          : "We regret to inform you that your account has been rejected/deactivated by Admin.\n\n Please Register with another Email.") +
                       "\n\nThank you,\nPolicy Trust Team";
 
         sendEmail(email, subject, body);

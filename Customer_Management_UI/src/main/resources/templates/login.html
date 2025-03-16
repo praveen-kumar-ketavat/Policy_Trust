@@ -15,6 +15,7 @@
             margin: 0;
         }
         .container {
+			position: relative;
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -55,11 +56,28 @@
         .register-link a:hover, .admin-link a:hover {
             text-decoration: underline;
         }
+			.back-button {
+					 position: absolute;
+					 top: 34px;
+					 left:38px;
+					 background: none;
+					 border: none;
+					 font-size: 35px;
+					 cursor: pointer;
+					 color: #007bff;
+					 transition: 0.3s;
+		}
+
+		.back-button:hover {
+					 color: #0056b3;
+					 transform: scale(1.1);
+		}
     </style>
 </head>
 <body>
 
 <div class="container">
+	<span class="back-button" onclick="goBack()">←</span>
     <h2>Login</h2>
     <form th:action="@{/loginCust}" name="myForm" method="post" th:object="${customer}">
         <div class="form-group">
@@ -80,6 +98,10 @@
 	<p th:if="${error}" style="color: red;">[[${error}]]</p>
 </div>
 <script>
+
+	function goBack() {
+		           window.history.back();
+		       }
 	function checkFormCompletion() {
 					        let form = document.forms['myForm'];
 					        let inputs = form.querySelectorAll("input[required]");

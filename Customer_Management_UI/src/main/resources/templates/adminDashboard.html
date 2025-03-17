@@ -165,13 +165,13 @@
             <a th:href="@{/fetchVerifiedCustomers}" target="contentFrame">Customers</a>
             <a th:href="@{/unverifiedCustomers}" target="contentFrame">New Customers</a>
 			<a th:href="@{/deletedCustomers}" target="contentFrame">Deactivated Customers</a>
-			<a >Policies</a>
-			<a >Schemes</a>
+			<a th:href="@{/viewPolicies}" target="contentFrame">Policies</a>
+			<a th:href="@{/viewSchemes}" target="contentFrame">Schemes</a>
         </div>
 
         <!-- Content Area with Iframe -->
         <div class="content">
-            <iframe name="contentFrame" src="" id="customerFrame">
+            <iframe name="contentFrame" src="/adminHomePage" id="customerFrame">
 			</iframe>
         </div>
 

@@ -1,6 +1,7 @@
 package com.pms.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Customer;
+import com.pms.entity.Policy;
 
 @Controller
 public class CustomerUIController {
@@ -230,6 +232,8 @@ public class CustomerUIController {
 	    return "redirect:/custAccount";
 	}
 	
+	
+	
 	@GetMapping("/changePassword")
 	public String changePasswordForm(Model model) {
 	    model.addAttribute("customer", new Customer());
@@ -239,7 +243,6 @@ public class CustomerUIController {
 	@PostMapping("/changeCustPassword")
 	public String changeCustPassword(@ModelAttribute Customer cust, Model model, HttpSession session) {
 		
-
 		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
 
 		cust.setId(customer.getId());
@@ -248,6 +251,7 @@ public class CustomerUIController {
 
 	    return "redirect:/custAccount";
 	}
+	
 	
 	
 	@GetMapping("/deleteCustomer")
@@ -262,5 +266,52 @@ public class CustomerUIController {
 
 	    return "redirect:/login";
 	}
+	@GetMapping("/homePage")
+	public String showHomePage() {
+	    return "homeMainPage";
+	}
+	
+	@GetMapping("/homeCustPage")
+	public String showCustHomePage(HttpSession session, Model model) {
+		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+		   model.addAttribute("customer", customer);
+	    return "custHomeDashboard";
+	}
+
+//	@GetMapping("/contact")
+//	public String contact() {
+//		return "contact";
+//	}
+//	
+	@GetMapping("/viewPolicies")
+	public String viewPolicies(Model model) {
+	    ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/policy/viewPolicies", List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyList";
+	}
+	
+	@GetMapping("/viewPolicyDetails")
+	public String showPolicyDetails(@RequestParam("policyId") Long policyId, Model model) {
+		  Policy p = new Policy();
+		  p.setPolicyId(policyId);
+	    ResponseEntity<Policy> response = restTemplate.postForEntity(BASE_URL + "/policy/viewPolicyDetails", p, Policy.class);
+	    model.addAttribute("policy", response.getBody());
+	    return "policyPage";
+	}
+	
+	@GetMapping("/viewSchemes")
+	public String viewSchemes() {
+	   
+	    return "schemesList";
+	}
+	
+	@GetMapping("/custPolicies")
+	public String custPolicies(Model model, HttpSession session) {
+		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
+		ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/policy/viewCustPolicies",customer, List.class);
+		model.addAttribute("policies", response.getBody());
+		return "policyList";
+	}
+	
 	
 }

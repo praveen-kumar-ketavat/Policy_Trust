@@ -166,5 +166,10 @@ public class AdminUIController {
 	    return "redirect:/fetchVerifiedCustomers";
 	}
 	
+	@GetMapping("/adminHomePage")
+	public String showAdminHomePage() {
+	    return "adminHomePage";
+	}
+	
 
 }

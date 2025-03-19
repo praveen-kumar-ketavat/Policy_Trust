@@ -19,6 +19,8 @@ public class AdminController {
 
     @Autowired
     AdminService service;
+
+    @Autowired
     CustomerService custService;
 
     @PostMapping("/login")
@@ -26,37 +28,50 @@ public class AdminController {
         Admin loggedInAdmin = service.login(admin.getEmail(), admin.getPassword());
         return ResponseEntity.ok(loggedInAdmin);
     }
-    
+
     @GetMapping("/viewVerifiedCustomers")
     public List<Customer> viewVerifiedCustomers(){
-    	return service.getVerifiedCustomers();
+        return service.getVerifiedCustomers();
     }
-    
+
     @GetMapping("/viewUnverifiedCustomers")
     public List<Customer> viewUnverifiedCustomers(){
-    	return service.getUnverifiedCustomers();
+        return service.getUnverifiedCustomers();
     }
-    
-    @GetMapping("/viewdeletedCustomers")
-    public List<Customer> viewdeletedCustomers(){
-    	return service.getDeletedCustomers();
+
+    @GetMapping("/viewDeletedCustomers")
+    public List<Customer> viewDeletedCustomers(){
+        return service.getDeletedCustomers();
     }
-    
-    
+
+    @GetMapping("/viewCustomerById/{id}")
+    public ResponseEntity<Customer> viewCustomerById(@PathVariable String id) throws InvalidEntityException {
+        Customer customer = service.getCustomerById(id);
+        return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping("/viewCustomerByName/{name}")
+    public List<Customer> viewCustomerByName(@PathVariable String name) {
+        return service.getCustomersByName(name);
+    }
+
+    @GetMapping("/filterCustomersByAge")
+    public List<Customer> filterCustomersByAgeRange(@RequestParam int minAge, @RequestParam int maxAge) {
+        return service.getCustomersByAgeRange(minAge, maxAge);
+    }
+
     @PostMapping("/deleteCustomer")
-	public String deleteCustomer(@RequestBody Customer cust) throws InvalidEntityException {
-    	return service.deleteCustomer(cust);
-	}
-    
+    public String deleteCustomer(@RequestBody Customer cust) throws InvalidEntityException {
+        return service.deleteCustomer(cust);
+    }
+
     @PostMapping("/acceptCustomer")
     public String acceptCustomer(@RequestBody Customer cust) throws InvalidEntityException {
-    	return service.acceptCustomer(cust);
+        return service.acceptCustomer(cust);
     }
-    
+
     @PostMapping("/rejectCustomer")
     public String rejectCustomer(@RequestBody Customer cust) throws InvalidEntityException {
-    	return service.rejectCustomer(cust);
+        return service.rejectCustomer(cust);
     }
-    
-    
 }

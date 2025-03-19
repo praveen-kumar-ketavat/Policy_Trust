@@ -19,4 +19,8 @@ public interface CustomerRepository extends JpaRepository<Customer,String> {
 	List<Customer> findByVerifiedFalseAndActiveTrue();
 
 	List<Customer> findByVerifiedFalseAndActiveFalse();
+
+	List<Customer> findByNameContainingIgnoreCase(String name);
+
+	List<Customer> findByAgeBetween(int minAge, int maxAge);
 }

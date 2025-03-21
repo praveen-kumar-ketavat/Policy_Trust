@@ -40,13 +40,9 @@ public class Policy {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-
-
     @JsonIgnore
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> payments;
-
-
 
     public enum PolicyStatus {
         ACTIVE, INACTIVE, CLOSED
@@ -127,6 +123,5 @@ public class Policy {
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
-
 
 }

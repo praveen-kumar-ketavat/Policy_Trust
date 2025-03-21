@@ -171,8 +171,6 @@ public class AdminUIController {
 	    return "adminHomePage";
 	}
 
-
-
 	@GetMapping("/searchCustomerById")
 	public String searchCustomerById(@RequestParam String query, Model model) {
 		try {

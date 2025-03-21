@@ -170,6 +170,38 @@ public class AdminUIController {
 	public String showAdminHomePage() {
 	    return "adminHomePage";
 	}
-	
 
+	@GetMapping("/searchCustomerById")
+	public String searchCustomerById(@RequestParam String query, Model model) {
+		try {
+			ResponseEntity<Customer> response = restTemplate.getForEntity(BASE_URL + "/admin/viewCustomerById/" + query, Customer.class);
+			Customer customer = response.getBody();
+
+			if (customer != null) {
+				model.addAttribute("customers", List.of(customer)); // Wrap in a list
+			} else {
+				model.addAttribute("error", "No customer found with ID: " + query);
+			}
+		} catch (HttpClientErrorException e) {
+			model.addAttribute("error", "Customer not found with ID: " + query);
+		}
+		return "adminHomePage";
+	}
+
+	@GetMapping("/searchCustomerByName")
+	public String searchCustomerByName(@RequestParam String query, Model model) {
+		try {
+			ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/admin/viewCustomerByName/" + query, List.class);
+			List<Customer> customers = response.getBody();
+
+			if (customers != null && !customers.isEmpty()) {
+				model.addAttribute("customers", customers);
+			} else {
+				model.addAttribute("error", "No customers found with name: " + query);
+			}
+		} catch (HttpClientErrorException e) {
+			model.addAttribute("error", "Error searching for customer: " + e.getMessage());
+		}
+		return "adminHomePage";
+	}
 }

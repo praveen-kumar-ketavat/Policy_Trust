@@ -1,15 +1,17 @@
 package com.pms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "admin")
 public class Admin {
 
-	@Id
-	@Column(name="id")
-	private String id;
-	
+    @Id
+    @Column(name="id")
+    private String id;
+
     @Column(name="name")
     private String name;
 
@@ -19,7 +21,9 @@ public class Admin {
     @Column(name="password")
     private String password;
 
-    
+
+
+
     public String getId() {
         return id;
     }
@@ -27,7 +31,7 @@ public class Admin {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -51,4 +55,6 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

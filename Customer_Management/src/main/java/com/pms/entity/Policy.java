@@ -1,5 +1,6 @@
-package com.pms.entity;
 
+package com.pms.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class Policy {
     @Column(name = "annuity_term")
     private AnnuityTerm annuityTerm;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -122,4 +123,5 @@ public class Policy {
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.pms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
@@ -24,6 +26,8 @@ public class Payment {
     @Column(name = "payment_type")
     private PaymentType paymentType;
 
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;

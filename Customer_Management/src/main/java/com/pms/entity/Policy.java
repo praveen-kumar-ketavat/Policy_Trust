@@ -2,6 +2,8 @@
 package com.pms.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -35,17 +37,17 @@ public class Policy {
     @Column(name = "annuity_term")
     private AnnuityTerm annuityTerm;
 
-    @JsonBackReference
+    @JsonBackReference(value="customer-policies")
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     
-    @JsonBackReference
+    @JsonBackReference(value="scheme-policies")
     @ManyToOne
     @JoinColumn(name = "scheme_id", nullable = false)
     private Scheme scheme;
 
-    @JsonIgnore
+    @JsonManagedReference(value="policy-payments")
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> payments;
 

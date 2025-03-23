@@ -3,6 +3,8 @@ package com.pms.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -59,15 +61,16 @@ public class Customer {
     private boolean active;
 
 
-//    @JsonIgnore
+    @JsonManagedReference(value="customer-policies")
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Policy> policies;
 
+    @JsonManagedReference(value="customer-feedbacks")
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Feedback> feedbacks;
 
 
-//    @JsonIgnore
+    @JsonManagedReference(value="customer-payments")
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> payments;
 

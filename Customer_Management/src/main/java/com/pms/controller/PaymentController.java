@@ -1,5 +1,6 @@
 package com.pms.controller;
 
+import com.pms.entity.Customer;
 import com.pms.entity.Payment;
 import com.pms.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("payment")
 public class PaymentController {
 
     @Autowired
@@ -21,11 +22,9 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.getAllPayments());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable String id) {
-        Optional<Payment> payment = paymentService.getPaymentById(id);
-        return payment.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @PostMapping("/viewCustPayments")
+    public List viewCustPayments(@RequestBody Customer cust) {
+       return paymentService.viewCustPayments(cust.getId());
     }
 
     @PostMapping

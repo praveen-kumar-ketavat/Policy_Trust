@@ -239,7 +239,7 @@
 	<div class="menu-list">
 			<a th:href="@{/homeCustPage}" target="contentFrame">Home</a>
 			<a th:href="@{/viewPoliciesInCustDashboard}" target="contentFrame">Policy</a>
-			<a th:href="@{/viewSchemes}" target="contentFrame">Scheme</a>
+			<a th:href="@{/viewSchemesInCustDashboard}" target="contentFrame">Scheme</a>
 			<a th:href="@{/contact}" target="contentFrame">Contact Us</a>
 		</div>
     <div class="user-menu" onclick="toggleDropdown()">
@@ -248,7 +248,7 @@
         <div class="dropdown-menu" id="dropdownMenu">
             <a th:href="@{/custAccount}">Account Details</a>
 			<a th:href="@{/custPolicies}">Policies</a>
-			<a href="">Transactions</a>
+			<a th:href="@{/viewCustTransactions}">Transactions</a>
             <a href="/">Logout</a>
         </div>
     </div>

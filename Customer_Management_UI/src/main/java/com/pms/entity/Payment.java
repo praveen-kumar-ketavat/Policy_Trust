@@ -2,39 +2,15 @@ package com.pms.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "payment")
 public class Payment {
-
-    @Id
-
-    @Column(name = "payment_id") // UUIDs are usually 36 characters long
     private String paymentId;
-
-    @Column(name = "amount", nullable = false)
-    @NotNull(message = "Amount is required")
     private Double amount;
-
-    @Column(name = "payment_date")
     private LocalDate paymentDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "payment_type")
     private PaymentType paymentType;
-
-
-    @JsonBackReference(value="customer-payments")
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
-    @JsonBackReference(value="policy-payments")
-    @ManyToOne
-    @JoinColumn(name = "policy_id", nullable = false)
     private Policy policy;
 
     public enum PaymentType {

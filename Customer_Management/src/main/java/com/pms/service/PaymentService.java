@@ -56,4 +56,8 @@ public class PaymentService {
     public void deletePayment(String paymentId) {
         paymentRepository.deleteById(paymentId);
     }
+
+	public List viewCustPayments(String id) {
+		return paymentRepository.findByCustomerId(id);
+	}
 }

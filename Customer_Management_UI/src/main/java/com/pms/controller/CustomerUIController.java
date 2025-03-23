@@ -353,5 +353,29 @@ public class CustomerUIController {
 	    return "policyPageInCust";
 	}
 	
+	@GetMapping("/viewSchemesInCustDashboard")
+	public String viewSchemesInCustDashboard(Model model) {
+		ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/scheme/viewSchemes", List.class);
+	    model.addAttribute("schemes", response.getBody());
+	    return "CustSchemesList";
+	}
+	@GetMapping("/viewCustPoliciesInScheme")
+	public String showCustPoliciesInScheme(Model model, @RequestParam("schemeId") int schemeId) {
+		Scheme s=new Scheme();
+		s.setId(schemeId);
+		ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/policy/viewSchemePolicies", s , List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyListInCustDashboard";
+	}
+	
+	
+	@GetMapping("/viewCustTransactions")
+    public String showCustTransactions(HttpSession session, Model model) {
+        Customer cust = (Customer) session.getAttribute("loggedInCustomer");
+
+        ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/payment/viewCustPayments", cust  , List.class);
+	    model.addAttribute("payments", response.getBody());
+	    return "custPayments";
+    }
 	
 }

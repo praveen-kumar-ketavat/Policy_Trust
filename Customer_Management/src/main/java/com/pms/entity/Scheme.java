@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
@@ -29,6 +31,7 @@ public class Scheme {
     @Column(name = "eligibility_criteria", nullable = false)
     private String eligibilityCriteria;
 
+    @JsonManagedReference(value="scheme-policies")
     @OneToMany(mappedBy = "scheme", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Policy> policies;
 

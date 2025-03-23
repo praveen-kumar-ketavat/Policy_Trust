@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
 import com.pms.entity.Policy;
+import com.pms.entity.Scheme;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -219,6 +220,21 @@ public class AdminUIController {
 	    ResponseEntity<Policy> response = restTemplate.postForEntity(BASE_URL + "/policy/viewPolicyDetails", p, Policy.class);
 	    model.addAttribute("policy", response.getBody());
 	    return "policyPageInAdmin";
+	}
+	
+	@GetMapping("/viewSchemesInAdmin")
+	public String viewSchemesInAdmin(Model model) {
+		ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/scheme/viewSchemes", List.class);
+	    model.addAttribute("schemes", response.getBody());
+	    return "adminSchemesList";
+	}
+	@GetMapping("/viewAdminPoliciesInScheme")
+	public String viewAdminPoliciesInScheme(Model model, @RequestParam("schemeId") int schemeId) {
+		Scheme s=new Scheme();
+		s.setId(schemeId);
+		ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/policy/viewSchemePolicies", s , List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyListInAdmin";
 	}
 	
 }

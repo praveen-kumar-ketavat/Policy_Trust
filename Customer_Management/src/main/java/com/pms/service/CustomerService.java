@@ -71,7 +71,7 @@ public class CustomerService {
 	    Customer customer = repo.findByEmail(email).orElse(null);
 
 	    if (customer == null) {
-	        throw new InvalidEntityException("User not found");
+	        throw new InvalidEntityException("User doesn't exist. Register your account.");
 	    }
 	    if (!customer.getActive()) {
 	        throw new InvalidEntityException("Your account is deleted/rejected. Kindly register with a new email.");

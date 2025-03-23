@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Customer;
 import com.pms.entity.Policy;
+import com.pms.entity.Scheme;
 
 @Controller
 public class CustomerUIController {
@@ -299,10 +300,40 @@ public class CustomerUIController {
 	    return "policyPage";
 	}
 	
+	
+	
+	
+	
+	@GetMapping("/viewPoliciesInCustDashboard")
+	public String showPoliciesInCustDashboard(Model model) {
+	    ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/policy/viewPolicies", List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyListInCustDashboard";
+	}
+	
+	@GetMapping("/viewPolicyDetailsInCustDashboard")
+	public String showPolicyDetailsInCustDashboard(@RequestParam("policyId") Long policyId, Model model) {
+		  Policy p = new Policy();
+		  p.setPolicyId(policyId);
+	    ResponseEntity<Policy> response = restTemplate.postForEntity(BASE_URL + "/policy/viewPolicyDetails", p, Policy.class);
+	    model.addAttribute("policy", response.getBody());
+	    return "policyPageInCustDashboard";
+	}
+	
+	
 	@GetMapping("/viewSchemes")
-	public String viewSchemes() {
-	   
+	public String viewSchemes(Model model) {
+		ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/scheme/viewSchemes", List.class);
+	    model.addAttribute("schemes", response.getBody());
 	    return "schemesList";
+	}
+	@GetMapping("/viewPoliciesInScheme")
+	public String showPoliciesInScheme(Model model, @RequestParam("schemeId") int schemeId) {
+		Scheme s=new Scheme();
+		s.setId(schemeId);
+		ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/policy/viewSchemePolicies", s , List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyList";
 	}
 	
 	@GetMapping("/custPolicies")
@@ -310,7 +341,16 @@ public class CustomerUIController {
 		Customer customer = (Customer) session.getAttribute("loggedInCustomer");
 		ResponseEntity<List> response = restTemplate.postForEntity(BASE_URL + "/policy/viewCustPolicies",customer, List.class);
 		model.addAttribute("policies", response.getBody());
-		return "policyList";
+		return "custPolicyList";
+	}
+	
+	@GetMapping("/viewCustPolicyDetails")
+	public String showCustPolicyDetails(@RequestParam("policyId") Long policyId, Model model) {
+		  Policy p = new Policy();
+		  p.setPolicyId(policyId);
+	    ResponseEntity<Policy> response = restTemplate.postForEntity(BASE_URL + "/policy/viewPolicyDetails", p, Policy.class);
+	    model.addAttribute("policy", response.getBody());
+	    return "policyPageInCust";
 	}
 	
 	

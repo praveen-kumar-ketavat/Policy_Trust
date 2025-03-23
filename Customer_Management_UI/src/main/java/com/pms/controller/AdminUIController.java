@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.entity.Policy;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -109,7 +110,7 @@ public class AdminUIController {
 	
 	@GetMapping("/deletedCustomers")
 	public String deletedCustomers(Model model) {
-	    ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/admin/viewdeletedCustomers", List.class);
+	    ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/admin/viewDeletedCustomers", List.class);
 	    model.addAttribute("customers", response.getBody());
 	    return "deletedList";
 	}
@@ -204,4 +205,20 @@ public class AdminUIController {
 		}
 		return "adminHomePage";
 	}
+	@GetMapping("/viewPoliciesInAdmin")
+	public String viewPoliciesInAdmin(Model model) {
+	    ResponseEntity<List> response = restTemplate.getForEntity(BASE_URL + "/policy/viewPolicies", List.class);
+	    model.addAttribute("policies", response.getBody());
+	    return "policyListInAdmin";
+	}
+	
+	@GetMapping("/viewPolicyDetailsInAdmin")
+	public String showPolicyDetailsInAdmin(@RequestParam("policyId") Long policyId, Model model) {
+		  Policy p = new Policy();
+		  p.setPolicyId(policyId);
+	    ResponseEntity<Policy> response = restTemplate.postForEntity(BASE_URL + "/policy/viewPolicyDetails", p, Policy.class);
+	    model.addAttribute("policy", response.getBody());
+	    return "policyPageInAdmin";
+	}
+	
 }

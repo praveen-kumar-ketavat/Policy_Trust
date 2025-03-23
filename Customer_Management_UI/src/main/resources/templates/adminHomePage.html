@@ -354,57 +354,6 @@
         return true;
     }
 
-
-<!--    document.addEventListener('DOMContentLoaded', () => {-->
-<!--    const minRange = document.getElementById('minRange');-->
-<!--    const maxRange = document.getElementById('maxRange');-->
-<!--    const minAge = document.getElementById('minAge');-->
-<!--    const maxAge = document.getElementById('maxAge');-->
-<!--    const applyFilters = document.getElementById('applyFilters');-->
-<!--    const sortOrder = document.getElementById('sortOrder');-->
-<!--    const trackActive = document.querySelector('.range-slider::before');-->
-
-<!--    // Update age display and active track-->
-<!--    function updateAgeValues() {-->
-<!--        const minValue = parseInt(minRange.value);-->
-<!--        const maxValue = parseInt(maxRange.value);-->
-
-<!--        if (minValue > maxValue - 5) {-->
-<!--            minRange.value = maxValue - 5;-->
-<!--        }-->
-<!--        if (maxValue < minValue + 5) {-->
-<!--            maxRange.value = minValue + 5;-->
-<!--        }-->
-
-<!--        minAge.textContent = minRange.value;-->
-<!--        maxAge.textContent = maxRange.value;-->
-
-<!--        const minPercent = ((minRange.value - minRange.min) / (minRange.max - minRange.min)) * 100;-->
-<!--        const maxPercent = ((maxRange.value - maxRange.min) / (maxRange.max - maxRange.min)) * 100;-->
-
-<!--        trackActive.style.left = `${minPercent}%`;-->
-<!--        trackActive.style.right = `${100 - maxPercent}%`;-->
-<!--    }-->
-
-<!--    // Attach event listeners-->
-<!--    minRange.addEventListener('input', updateAgeValues);-->
-<!--    maxRange.addEventListener('input', updateAgeValues);-->
-
-<!--    // Apply filters-->
-<!--    applyFilters.addEventListener('click', () => {-->
-<!--        const filters = {-->
-<!--            minAge: minRange.value,-->
-<!--            maxAge: maxRange.value,-->
-<!--            sortOrder: sortOrder.value-->
-<!--        };-->
-<!--        console.log('Applied Filters:', filters);-->
-<!--        // Implement your filtering logic here-->
-<!--    });-->
-
-<!--    // Initialize values-->
-<!--    updateAgeValues();-->
-<!--});-->
-
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pms.entity.Customer;
 import com.pms.entity.Policy;
+import com.pms.entity.Scheme;
 import com.pms.service.CustomerService;
 import com.pms.service.PolicyService;
 
@@ -35,6 +36,11 @@ public class PolicyController {
 	@PostMapping("/viewCustPolicies")
 	public List<Policy> viewCustPolicies(@RequestBody Customer cust){
 		return service.viewCustPolicies(cust.getId());
+	}
+	
+	@PostMapping("/viewSchemePolicies")
+	public List<Policy> viewSchemePolicies(@RequestBody Scheme sc){
+		return service.viewSchemePolicies(sc.getId());
 	}
 
 

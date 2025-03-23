@@ -25,11 +25,14 @@ public class PolicyService {
 
 	public Optional<Policy> viewPolicyDetails(Policy p) {
 		  Optional<Policy> pol = repo.findById(p.getPolicyId());
-	        
 	        return pol;
 	}
 
 	public List<Policy> viewCustPolicies(String id) {
 		return repo.findByCustomerId(id);
+	}
+
+	public List<Policy> viewSchemePolicies(int id) {
+		return repo.findBySchemeId(id);
 	}
 }

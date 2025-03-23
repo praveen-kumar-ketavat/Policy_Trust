@@ -39,6 +39,11 @@ public class Policy {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+    
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "scheme_id", nullable = false)
+    private Scheme scheme;
 
     @JsonIgnore
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)

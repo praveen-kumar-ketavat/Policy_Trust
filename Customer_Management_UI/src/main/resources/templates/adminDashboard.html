@@ -162,10 +162,11 @@
         
         <!-- Sidebar Menu -->
         <div class="sidebar">
+			<a th:href="@{/adminHomePage}" target="contentFrame">Home</a>
             <a th:href="@{/fetchVerifiedCustomers}" target="contentFrame">Customers</a>
             <a th:href="@{/unverifiedCustomers}" target="contentFrame">New Customers</a>
 			<a th:href="@{/deletedCustomers}" target="contentFrame">Deactivated Customers</a>
-			<a th:href="@{/viewPolicies}" target="contentFrame">Policies</a>
+			<a th:href="@{/viewPoliciesInAdmin}" target="contentFrame">Policies</a>
 			<a th:href="@{/viewSchemes}" target="contentFrame">Schemes</a>
         </div>
 

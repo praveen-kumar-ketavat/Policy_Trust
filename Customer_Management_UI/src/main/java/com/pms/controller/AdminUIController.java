@@ -1,6 +1,7 @@
 package com.pms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -236,5 +237,26 @@ public class AdminUIController {
 	    model.addAttribute("policies", response.getBody());
 	    return "policyListInAdmin";
 	}
+	@GetMapping("/viewCustomer")
+	public String viewCustomer(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("email") String email, Model model) {
+	    Customer customer = new Customer();
+	    customer.setId(id);
+	    customer.setName(name);
+	    customer.setEmail(email);
+
+	    ResponseEntity<Object> response = restTemplate.postForEntity(BASE_URL + "/admin/viewCustomerDetailsWithPolicies", customer, Object.class);
+
+	    // Use ObjectMapper to split customer + policies
+	    Map<String, Object> map = objectMapper.convertValue(response.getBody(), Map.class);
+
+	    Customer customerDetails = objectMapper.convertValue(map.get("customerDetails"), Customer.class);
+	    List<Policy> policyList = objectMapper.convertValue(map.get("policyList"), objectMapper.getTypeFactory().constructCollectionType(List.class, Policy.class));
+
+	    model.addAttribute("customer", customerDetails);
+	    model.addAttribute("policies", policyList);
+
+	    return "view-customer"; // view-customer.html
+	}
+
 	
 }

@@ -2,10 +2,12 @@ package com.pms.controller;
 
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.entity.Policy;
 import com.pms.exception.InvalidEntityException;
 import com.pms.service.AdminService;
 import com.pms.service.CustomerService;
 import com.pms.service.EmailService;
+import com.pms.service.PolicyService;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class AdminController {
 
     @Autowired
     CustomerService custService;
+    
+    @Autowired
+    PolicyService pservice;
 
     @PostMapping("/login")
     public ResponseEntity<Admin> login(@RequestBody Admin admin) throws InvalidEntityException {
@@ -74,4 +79,15 @@ public class AdminController {
     public String rejectCustomer(@RequestBody Customer cust) throws InvalidEntityException {
         return service.rejectCustomer(cust);
     }
+    @PostMapping("/viewCustomerDetailsWithPolicies")
+    public ResponseEntity<?> viewCustomerDetailsWithPolicies(@RequestBody Customer cust) throws InvalidEntityException {
+        Customer customer = service.getCustomerById(cust.getId());
+        List<Policy> policies = pservice.viewCustPolicies(cust.getId());
+
+        return ResponseEntity.ok(new Object() {
+            public final Customer customerDetails = customer;
+            public final List<Policy> policyList = policies;
+        });
+    }
+
 }

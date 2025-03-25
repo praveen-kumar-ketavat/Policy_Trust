@@ -2,14 +2,18 @@ package com.pms.controller;
 
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.entity.Payment;
 import com.pms.entity.Policy;
 import com.pms.exception.InvalidEntityException;
+import com.pms.repository.PolicyRepository;
 import com.pms.service.AdminService;
 import com.pms.service.CustomerService;
 import com.pms.service.EmailService;
+import com.pms.service.PaymentService;
 import com.pms.service.PolicyService;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,12 @@ public class AdminController {
     
     @Autowired
     PolicyService pservice;
+    
+    @Autowired
+    PaymentService payservice;
+    
+    @Autowired
+    PolicyRepository policyRepository;
 
     @PostMapping("/login")
     public ResponseEntity<Admin> login(@RequestBody Admin admin) throws InvalidEntityException {
@@ -79,15 +89,26 @@ public class AdminController {
     public String rejectCustomer(@RequestBody Customer cust) throws InvalidEntityException {
         return service.rejectCustomer(cust);
     }
-    @PostMapping("/viewCustomerDetailsWithPolicies")
-    public ResponseEntity<?> viewCustomerDetailsWithPolicies(@RequestBody Customer cust) throws InvalidEntityException {
+    
+    @PostMapping("/viewCustomerDetailsWithPoliciesAndPayments")
+    public ResponseEntity<?> viewCustomerDetailsWithPoliciesAndPayments(@RequestBody Customer cust) throws InvalidEntityException {
         Customer customer = service.getCustomerById(cust.getId());
         List<Policy> policies = pservice.viewCustPolicies(cust.getId());
+        List<Payment> payments = payservice.viewCustPayments(cust.getId());
+
+        // 🔍 Debugging: Log policyId inside paymentList
+        System.out.println("Payments List:");
+        for (Payment payment : payments) {
+            System.out.println("Payment ID: " + payment.getPaymentId() + ", Policy ID: " +
+                (payment.getPolicy() != null ? payment.getPolicy().getPolicyId() : "NULL"));
+        }
 
         return ResponseEntity.ok(new Object() {
             public final Customer customerDetails = customer;
             public final List<Policy> policyList = policies;
+            public final List<Payment> paymentList = payments;
         });
     }
+
 
 }

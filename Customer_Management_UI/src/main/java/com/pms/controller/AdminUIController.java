@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.entity.Payment;
 import com.pms.entity.Policy;
 import com.pms.entity.Scheme;
 
@@ -244,19 +245,22 @@ public class AdminUIController {
 	    customer.setName(name);
 	    customer.setEmail(email);
 
-	    ResponseEntity<Object> response = restTemplate.postForEntity(BASE_URL + "/admin/viewCustomerDetailsWithPolicies", customer, Object.class);
+	    ResponseEntity<Object> response = restTemplate.postForEntity(BASE_URL + "/admin/viewCustomerDetailsWithPoliciesAndPayments", customer, Object.class);
 
-	    // Use ObjectMapper to split customer + policies
 	    Map<String, Object> map = objectMapper.convertValue(response.getBody(), Map.class);
 
 	    Customer customerDetails = objectMapper.convertValue(map.get("customerDetails"), Customer.class);
 	    List<Policy> policyList = objectMapper.convertValue(map.get("policyList"), objectMapper.getTypeFactory().constructCollectionType(List.class, Policy.class));
+	    List<Payment> paymentList = objectMapper.convertValue(map.get("paymentList"), objectMapper.getTypeFactory().constructCollectionType(List.class, Payment.class));
 
 	    model.addAttribute("customer", customerDetails);
 	    model.addAttribute("policies", policyList);
+	    model.addAttribute("payments", paymentList);
 
-	    return "view-customer"; // view-customer.html
+	    return "view-customer";
 	}
+
+
 
 	
 }

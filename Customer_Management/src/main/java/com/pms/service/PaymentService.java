@@ -57,7 +57,25 @@ public class PaymentService {
         paymentRepository.deleteById(paymentId);
     }
 
-	public List viewCustPayments(String id) {
-		return paymentRepository.findByCustomerId(id);
-	}
+    public List<Payment> viewCustPayments(String customerId) {
+        List<Payment> payments = paymentRepository.findByCustomerId(customerId);
+
+        for (Payment payment : payments) {
+            if (payment.getPolicy() == null) {  
+                Optional<Policy> policyOpt = policyRepository.findById(
+                    payment.getCustomer().getPolicies().stream()
+                    .filter(policy -> policy.getPayments().contains(payment))
+                    .map(Policy::getPolicyId)
+                    .findFirst()
+                    .orElse(null)
+                );
+                policyOpt.ifPresent(payment::setPolicy);
+            }
+        }
+
+        return payments;
+    }
+
+
+
 }

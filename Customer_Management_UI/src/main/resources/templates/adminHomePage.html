@@ -327,7 +327,7 @@
                 <td th:text="${customer.email}"></td>
                 <td th:text="${customer.age}"></td>
                 <td>
-                    <a th:href="@{/viewCustomer/{id}(id=${customer.id})}" class="view-btn">👁️ View Details</a>
+                    <a th:href="@{/viewCustomer(id=${customer.id})}" class="view-btn">👁️ View Details</a>
                 </td>
             </tr>
             </tbody>

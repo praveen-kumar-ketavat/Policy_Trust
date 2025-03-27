@@ -96,13 +96,6 @@ public class AdminController {
         List<Policy> policies = pservice.viewCustPolicies(cust.getId());
         List<Payment> payments = payservice.viewCustPayments(cust.getId());
 
-        // 🔍 Debugging: Log policyId inside paymentList
-        System.out.println("Payments List:");
-        for (Payment payment : payments) {
-            System.out.println("Payment ID: " + payment.getPaymentId() + ", Policy ID: " +
-                (payment.getPolicy() != null ? payment.getPolicy().getPolicyId() : "NULL"));
-        }
-
         return ResponseEntity.ok(new Object() {
             public final Customer customerDetails = customer;
             public final List<Policy> policyList = policies;

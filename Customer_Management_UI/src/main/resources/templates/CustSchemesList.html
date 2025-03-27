@@ -51,6 +51,22 @@
         .btn:hover {
             background: #218838;
         }
+		.feedback-btn {
+				           display: inline-block;
+				           margin-top: 20px;
+				           padding: 12px 25px;
+				           font-size: 18px;
+				           color: white;
+				           background: #28a745;
+				           border: none;
+				           border-radius: 5px;
+				           cursor: pointer;
+				           text-decoration: none;
+				           transition: 0.3s;
+				       }
+				       .feedback-btn:hover {
+				           background: #218838;
+				       }
     </style>
 </head>
 <body>
@@ -64,6 +80,7 @@
         <p><strong>Benefits:</strong> <span th:text="${scheme.benefits}"></span></p>
         <p><strong>Eligibility Criteria:</strong> <span th:text="${scheme.eligibilityCriteria}"></span></p>
 		<a th:href="@{/viewCustPoliciesInScheme(schemeId=${scheme.id})}" class="btn">View Policies</a>
+		<a class="feedback-btn">Feedback</a>
     </div>
 
    

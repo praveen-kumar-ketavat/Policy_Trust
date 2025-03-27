@@ -85,7 +85,7 @@
 				<p><strong>Phone:</strong> <span th:text="${customer.phone}"></span></p>
 				<p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
 				<div class="btn-group">
-					<a th:href="@{'/viewCustomer'(id=${customer.id}, name=${customer.name}, email=${customer.email})}" class="btn btn-view">View Info</a>
+					<a th:href="@{/viewCustomer(id=${customer.id})}" class="btn btn-view">View Info</a>
 
 					<a th:href="@{/deleteCust(id=${customer.id},email=${customer.email},name=${customer.name})}" class="btn btn-delete">Deactivate</a>
 			</div>

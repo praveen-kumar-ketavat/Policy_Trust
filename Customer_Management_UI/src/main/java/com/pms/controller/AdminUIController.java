@@ -239,11 +239,9 @@ public class AdminUIController {
 	    return "policyListInAdmin";
 	}
 	@GetMapping("/viewCustomer")
-	public String viewCustomer(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("email") String email, Model model) {
+	public String viewCustomer(@RequestParam("id") String id, Model model) {
 	    Customer customer = new Customer();
 	    customer.setId(id);
-	    customer.setName(name);
-	    customer.setEmail(email);
 
 	    ResponseEntity<Object> response = restTemplate.postForEntity(BASE_URL + "/admin/viewCustomerDetailsWithPoliciesAndPayments", customer, Object.class);
 

@@ -1,6 +1,7 @@
 package com.pms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pms.entity.Admin;
 import com.pms.entity.Customer;
+import com.pms.entity.Payment;
 import com.pms.entity.Policy;
 import com.pms.entity.Scheme;
 
@@ -236,5 +238,29 @@ public class AdminUIController {
 	    model.addAttribute("policies", response.getBody());
 	    return "policyListInAdmin";
 	}
+	@GetMapping("/viewCustomer")
+	public String viewCustomer(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("email") String email, Model model) {
+	    Customer customer = new Customer();
+	    customer.setId(id);
+	    customer.setName(name);
+	    customer.setEmail(email);
+
+	    ResponseEntity<Object> response = restTemplate.postForEntity(BASE_URL + "/admin/viewCustomerDetailsWithPoliciesAndPayments", customer, Object.class);
+
+	    Map<String, Object> map = objectMapper.convertValue(response.getBody(), Map.class);
+
+	    Customer customerDetails = objectMapper.convertValue(map.get("customerDetails"), Customer.class);
+	    List<Policy> policyList = objectMapper.convertValue(map.get("policyList"), objectMapper.getTypeFactory().constructCollectionType(List.class, Policy.class));
+	    List<Payment> paymentList = objectMapper.convertValue(map.get("paymentList"), objectMapper.getTypeFactory().constructCollectionType(List.class, Payment.class));
+
+	    model.addAttribute("customer", customerDetails);
+	    model.addAttribute("policies", policyList);
+	    model.addAttribute("payments", paymentList);
+
+	    return "view-customer";
+	}
+
+
+
 	
 }
